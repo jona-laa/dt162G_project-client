@@ -1,0 +1,33 @@
+#skillset {
+  h2 {
+    display: none;
+  }
+
+  .col-2 {
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+      url('../../assets/images/skillset-bg.jpg') no-repeat center center/cover;
+  }
+
+  .skills-container {
+    @include flex(row, wrap);
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+    }
+
+    .skill {
+      @include flex();
+      margin: 10px;
+      text-align: center;
+      width: 100px;
+
+      span {
+        font-family: 'Open Sans', 'sans-serif';
+        font-size: $font-M;
+      }
+    }
+  }
+}

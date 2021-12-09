@@ -1,0 +1,77 @@
+.row {
+  @include flex(row, wrap);
+  justify-content: center;
+}
+
+.col {
+  flex: 1;
+
+  @include maxWidth(767px) {
+    flex: 100%;
+  }
+}
+
+/* Flex container with Double Columns */
+.duo {
+  @include maxWidth(960px) {
+    @include flex();
+  }
+  .col-1,
+  .col-2 {
+    height: 100%;
+  }
+
+  .col-cover {
+    filter: brightness(50%);
+    height: 100%;
+    object-fit: cover;
+
+    @include maxWidth(960px) {
+      display: none;
+    }
+  }
+
+  .col-2 {
+    @include flex();
+    justify-content: center;
+    padding: 30px;
+  }
+}
+
+/* Flex container with Triple col */
+.trio {
+  text-align: center;
+
+  div {
+    padding: 10px 20px;
+    width: 33%;
+
+    @include maxWidth(768px) {
+      width: 50%;
+    }
+
+    @include maxWidth(550px) {
+      width: 100%;
+    }
+
+    p {
+      max-width: 500px;
+      margin: 10px auto;
+    }
+  }
+}
+
+/* Background/Text Colors */
+.bg-light {
+  background: $bg-light;
+  color: $color-dark;
+}
+
+.bg-dark {
+  background-color: $bg-dark;
+  color: $color-light;
+}
+
+.section-padding {
+  padding: $padding-section;
+}

@@ -1,0 +1,10 @@
+/* Social media icons */
+.icon-link {
+  color: $color-light;
+  font-size: 1.8rem;
+  margin: 5px;
+
+  &:hover {
+    opacity: 0.75;
+  }
+}

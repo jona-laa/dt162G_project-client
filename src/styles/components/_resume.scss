@@ -1,0 +1,20 @@
+#resume {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.9)
+    ),
+    url('../../assets/images/resume-bg.jpg') no-repeat center center/cover;
+
+  .work,
+  .studies {
+    margin: auto;
+    max-width: 1600px;
+  }
+
+  .resume-item {
+    span {
+      font-size: 1.4rem;
+      font-weight: lighter;
+    }
+  }
+}
