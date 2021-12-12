@@ -1,10 +1,14 @@
 import React from 'react'
 
+/**
+ * Renders Footer
+ * @component
+ */
 const Footer = () => {
   return (
     <footer className="bg-dark">
 
-      <small>&copy; 2021 Jona.Laa.Dev </small>
+      <small>&copy; {new Date().getFullYear()} Jona.Laa.Dev </small>
 
       <a href="#home" id="goTop" className="btn-top" aria-label="Go To Top">
         <svg className="arrow up" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"

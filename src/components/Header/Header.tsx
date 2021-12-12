@@ -1,5 +1,9 @@
 import React from 'react'
 
+/**
+ * Renders Header with hero
+ * @component
+ */
 const Header = () => {
 
   const toggleMenu = () => {
