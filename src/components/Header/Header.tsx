@@ -1,24 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { elementDisplay, elementToggle, alterBgColor } from '../../Utils/utils';
+// import gsap from "gsap";
 
 /**
  * Renders Header with hero
  * @component
  */
 const Header = () => {
-  const header = document.querySelector('.header-content');
-  const mainMenu: HTMLElement | null = document.querySelector('#menu-main-menu');
-  const mainMenuToggle = document.querySelector('#main-menu-toggle');
-
+  const headerRef = useRef<null | HTMLDivElement>();
+  const mainMenuRef = useRef<null | HTMLUListElement>();
+  const mainMenuToggleRef = useRef<null | HTMLButtonElement>();
+  const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+  const [currentScrollPos, setCurrentScrollPos] = useState(null);
 
   // TOGGLE MENU
   const toggleMenu = () => {
-    if (mainMenu?.getAttribute('aria-hidden') === 'false') {
-      mainMenu.setAttribute('aria-hidden', 'true');
-      mainMenuToggle?.setAttribute('aria-expanded', 'false');
+    if (mainMenuRef.current.ariaHidden === 'false') {
+      mainMenuRef.current.ariaHidden = 'true';
+      mainMenuToggleRef.current.ariaExpanded = 'false'
     } else {
-      mainMenu?.setAttribute('aria-hidden', 'false');
-      mainMenuToggle?.setAttribute('aria-expanded', 'true');
+      mainMenuRef.current.ariaHidden = 'false';
+      mainMenuToggleRef.current.ariaExpanded = 'true'
     }
 
     $('.main-menu ul').slideToggle(200, function () {
@@ -26,62 +28,62 @@ const Header = () => {
   }
 
   // HIDE HEADER
-  let prevScrollpos = window.pageYOffset;
-
   const hideMenu = () => {
-    let currentScrollPos = window.pageYOffset;
+    setCurrentScrollPos(window.scrollY)
 
     if (window.pageYOffset > 100) {
-      if (prevScrollpos > currentScrollPos) {
+      if (prevScrollPos > currentScrollPos) {
         // Header
-        elementToggle(header, 'top', '0');
-        header?.setAttribute('aria-hidden', 'false');
+        elementToggle(headerRef.current, 'top', '0');
+        headerRef.current.ariaHidden = 'false';
 
         // Menu
-        elementDisplay(mainMenu, 'none');
+        elementDisplay(mainMenuRef.current, 'none');
 
         if (window.innerWidth <= 812) {
           // Toggle
-          mainMenuToggle?.setAttribute('aria-hidden', 'false');
+          mainMenuToggleRef.current.ariaHidden = 'false';
         }
       } else {
-        elementToggle(header, 'top', '-120px');
-        header?.setAttribute('aria-hidden', 'true');
-        elementDisplay(mainMenu, 'none');
-        mainMenuToggle?.setAttribute('aria-hidden', 'true');
-        mainMenu?.setAttribute('aria-hidden', 'true');
+        elementToggle(headerRef.current, 'top', '-120px');
+        elementDisplay(mainMenuRef.current, 'none');
+        headerRef.current.ariaHidden = 'true';
+        mainMenuToggleRef.current.ariaHidden = 'true';
+        mainMenuToggleRef.current.ariaExpanded = 'false';
+        mainMenuRef.current.ariaHidden = 'true';
 
       }
     }
-
-    prevScrollpos = currentScrollPos;
+    setPrevScrollPos(currentScrollPos);
   }
 
-  useEffect(() => {
+  window.onresize = () => {
     if (window.innerWidth <= 812) {
-      mainMenuToggle?.setAttribute('aria-hidden', 'false');
-      mainMenuToggle?.setAttribute('aria-expanded', 'false');
-      mainMenu?.setAttribute('aria-hidden', 'true');
+      mainMenuToggleRef.current.ariaHidden = 'false';
+      mainMenuToggleRef.current.ariaExpanded = 'false';
+      mainMenuRef.current.ariaHidden = 'true'
     } else {
-      mainMenuToggle?.setAttribute('aria-hidden', 'true');
-      mainMenuToggle?.setAttribute('aria-expanded', 'true');
-      mainMenu?.setAttribute('aria-hidden', 'false');
+      mainMenuToggleRef.current.ariaHidden = 'true';
+      mainMenuToggleRef.current.ariaExpanded = 'true';
+      mainMenuRef.current.ariaHidden = 'false'
     }
-  })
+  }
 
   // Hide header & to top on scroll
   window.onscroll = () => {
-    // hideMenu();
-    // alterBgColor(300, 'rgba(0, 0, 0, 0.6)', 'transparent', header);
+    hideMenu();
+    alterBgColor(300, 'rgba(0, 0, 0, 0.6)', 'transparent', headerRef.current);
     // hideToTopBtn();
     // screen.width < 813 ? alterBgColor(300, 'rgba(0, 0, 0, 0.6)', 'transparent', mainMenu) : null;
   };
 
   return (
     <header className="hero">
-      <div className="header-content">
+      <div className="header-content" ref={headerRef}>
         <nav className="main-menu">
-          <button id="main-menu-toggle" aria-label="Toggle Mobile Menu"
+          <button id="main-menu-toggle"
+            ref={mainMenuToggleRef}
+            aria-label="Toggle Mobile Menu"
             aria-expanded="false" aria-hidden="true"
             onClick={() => toggleMenu()}
           >
@@ -91,7 +93,7 @@ const Header = () => {
               <rect y="60" width="90" height="10" fill="#f7f7f7"></rect>
             </svg>
           </button>
-          <ul id="menu-main-menu" className="menu">
+          <ul id="menu-main-menu" ref={mainMenuRef} className="menu">
             <li><a href="#about-me" className="menu-link">About Me</a></li>
             <li><a href="#skillset" className="menu-link">Skillset</a></li>
             <li><a href="#resume" className="menu-link">Resume</a></li>
