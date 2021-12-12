@@ -31,10 +31,10 @@ const Work: React.FC = (): JSX.Element => {
           <div className="loader"></div>
         ) : (
           work.map(job => (
-            <div className="resume-item">
+            <div key={job._id} className="resume-item">
               <h4>{job.company}</h4>
               <span>{job.title}</span><br />
-              <span>{job.date_start} – {job.date_end}</span>
+              <span>{job?.date_start?.split('T')[0]} – {job?.date_end?.split('T')[0]}</span>
               <p>{job.descr}</p>
             </div>
           ))

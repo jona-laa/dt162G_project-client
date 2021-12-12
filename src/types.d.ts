@@ -1,12 +1,8 @@
-// type RootState = {
-//   login: boolean
-// }
-
 interface About {
+  _id: string;
   heading: string;
-  bio: string;
+  bio: Array<string>;
   img_src: string;
-  hej: string;
 }
 
 interface Skill {
@@ -16,44 +12,36 @@ interface Skill {
 }
 
 interface Work {
+  _id: string;
   company: string;
   title: string;
-  date_start: Date;
-  date_end: Date;
+  date_start: string;
+  date_end: string;
   descr: string;
 }
 
-interface Studies {
+interface Course {
+  _id: string;
   institution: string;
   title: string;
-  date_start: Date;
-  date_end: Date;
+  date_start: string;
+  date_end: string;
   descr: string;
 }
 
-// interface ChatMessage {
-//     message: string,
-//     name: string
-// }
+interface Project {
+  _id: string;
+  title: string;
+  prj_url: string;
+  img_src: string;
+  descr: string;
+}
 
 // interface ChatFormProps {
 //     preventReload: (e: React.FormEvent<HTMLFormElement>) =>  void
 //     sendMessage: () => void
 // }
 
-// interface UpdateLoginParams {
-//     resStatus: number
-//     resMsg: ResponseMessage
-// }
-
 // type ResponseMessage = {
 //     msg: string
-// }
-
-// // Redux
-// const SET_LOGIN = 'SET_LOGIN'
-
-// interface LoginAction {
-//     type: typeof SET_LOGIN
-//     login: string | null
 // }

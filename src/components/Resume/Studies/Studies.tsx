@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
  */
 const Studies: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(true)
-  const [studies, setStudies] = useState<Array<Studies>>([])
+  const [studies, setStudies] = useState<Array<Course>>([])
 
   // Fetch About posts
   useEffect(() => {
@@ -31,10 +31,10 @@ const Studies: React.FC = (): JSX.Element => {
           <div className="loader"></div>
         ) : (
           studies.map(course => (
-            <div className="resume-item">
-              <h4>{course.institution}</h4>
-              <span>{course.title}</span><br />
-              <span>{course.date_start} – {course.date_end}</span>
+            <div key={course._id} className="resume-item">
+              <h4>{course.title}</h4>
+              <span>{course.institution}</span><br />
+              <span>{course.date_start.split('T')[0]} – {course.date_end.split('T')[0]}</span>
               <p>{course.descr}</p>
             </div>
           ))

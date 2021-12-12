@@ -10,7 +10,7 @@ import Contact from './components/Contact/Contact';
 
 const App: React.FC = (): JSX.Element => {
   return (
-    <div className="App">
+    <>
       <Header />
       <main>
         <About />
@@ -20,7 +20,7 @@ const App: React.FC = (): JSX.Element => {
         <Contact />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 

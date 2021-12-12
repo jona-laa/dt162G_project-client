@@ -1,23 +1,81 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { elementDisplay, elementToggle, alterBgColor } from '../../Utils/utils';
 
 /**
  * Renders Header with hero
  * @component
  */
 const Header = () => {
+  const header = document.querySelector('.header-content');
+  const mainMenu: HTMLElement | null = document.querySelector('#menu-main-menu');
+  const mainMenuToggle = document.querySelector('#main-menu-toggle');
 
+
+  // TOGGLE MENU
   const toggleMenu = () => {
-    // if (mainMenu.getAttribute('aria-hidden') == 'false') {
-    //   mainMenu.setAttribute('aria-hidden', 'true');
-    //   mainMenuToggle.setAttribute('aria-expanded', 'false');
-    // } else {
-    //   mainMenu.setAttribute('aria-hidden', 'false');
-    //   mainMenuToggle.setAttribute('aria-expanded', 'true');
-    // }
+    if (mainMenu?.getAttribute('aria-hidden') === 'false') {
+      mainMenu.setAttribute('aria-hidden', 'true');
+      mainMenuToggle?.setAttribute('aria-expanded', 'false');
+    } else {
+      mainMenu?.setAttribute('aria-hidden', 'false');
+      mainMenuToggle?.setAttribute('aria-expanded', 'true');
+    }
 
     $('.main-menu ul').slideToggle(200, function () {
     });
   }
+
+  // HIDE HEADER
+  let prevScrollpos = window.pageYOffset;
+
+  const hideMenu = () => {
+    let currentScrollPos = window.pageYOffset;
+
+    if (window.pageYOffset > 100) {
+      if (prevScrollpos > currentScrollPos) {
+        // Header
+        elementToggle(header, 'top', '0');
+        header?.setAttribute('aria-hidden', 'false');
+
+        // Menu
+        elementDisplay(mainMenu, 'none');
+
+        if (window.innerWidth <= 812) {
+          // Toggle
+          mainMenuToggle?.setAttribute('aria-hidden', 'false');
+        }
+      } else {
+        elementToggle(header, 'top', '-120px');
+        header?.setAttribute('aria-hidden', 'true');
+        elementDisplay(mainMenu, 'none');
+        mainMenuToggle?.setAttribute('aria-hidden', 'true');
+        mainMenu?.setAttribute('aria-hidden', 'true');
+
+      }
+    }
+
+    prevScrollpos = currentScrollPos;
+  }
+
+  useEffect(() => {
+    if (window.innerWidth <= 812) {
+      mainMenuToggle?.setAttribute('aria-hidden', 'false');
+      mainMenuToggle?.setAttribute('aria-expanded', 'false');
+      mainMenu?.setAttribute('aria-hidden', 'true');
+    } else {
+      mainMenuToggle?.setAttribute('aria-hidden', 'true');
+      mainMenuToggle?.setAttribute('aria-expanded', 'true');
+      mainMenu?.setAttribute('aria-hidden', 'false');
+    }
+  })
+
+  // Hide header & to top on scroll
+  window.onscroll = () => {
+    // hideMenu();
+    // alterBgColor(300, 'rgba(0, 0, 0, 0.6)', 'transparent', header);
+    // hideToTopBtn();
+    // screen.width < 813 ? alterBgColor(300, 'rgba(0, 0, 0, 0.6)', 'transparent', mainMenu) : null;
+  };
 
   return (
     <header className="hero">

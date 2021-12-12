@@ -111,6 +111,9 @@ nav,
 section {
   display: block;
 }
+html {
+  scroll-behavior: smooth;
+}
 body {
   font-family: $font-main;
   background: $color-light;

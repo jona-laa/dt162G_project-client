@@ -7,6 +7,8 @@
   }
 
   .portfolio-item {
+    // background: url('../../assets/images/Flipside.jpg') no-repeat center
+    //   center/cover;
     height: 270px;
     margin: 15px;
     padding: 0;
@@ -23,7 +25,8 @@
 
     // Covers portfolio item on :hover
     .portfolio-item_overlay {
-      display: none;
+      display: block;
+      // display: none;
       background-color: rgba(0, 0, 0, 0.75);
       box-sizing: border-box;
       height: 100%;

@@ -50,7 +50,7 @@ const About: React.FC = (): JSX.Element => {
             <div>
               <div>
                 <h3>{about[0].heading}</h3>
-                <p>{about[0].bio}</p>
+                {about[0].bio.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
               </div>
             </div>
           </>
