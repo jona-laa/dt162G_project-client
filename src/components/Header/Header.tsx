@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { elementDisplay, elementToggle, alterBgColor } from '../../Utils/utils';
 // import gsap from "gsap";
 
