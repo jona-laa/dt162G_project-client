@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import me from '../../assets/images/me.jpg'
+import { AuthContext } from '../../context/authContext'
+import EditItemControls from '../EditItemControls/EditItemControls'
 
 /**
  * Renders About section
  * @component
  */
 const About: React.FC = (): JSX.Element => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState<boolean>(true)
   const [about, setAbout] = useState<Array<About>>([])
+  const { authorized } = useContext(AuthContext)
 
   // Fetch About posts
   useEffect(() => {
@@ -33,11 +36,16 @@ const About: React.FC = (): JSX.Element => {
       <div className="divider"></div>
 
       <div className="about-container">
-        {/* About will render here */}
+
         {loading ? (
           <div className="loader"></div>
         ) : (
           <>
+            {/* EDIT CONTROLS IF LOGGED IN */}
+            {authorized && about.length > 0 &&
+              (<EditItemControls itemId={about[0]._id} itemType={'about'} />)}
+
+            {/* AVATAR */}
             <div className="avatar-container">
               <div className="avatar"
                 style={{
@@ -47,10 +55,11 @@ const About: React.FC = (): JSX.Element => {
               ></div>
             </div>
 
+            {/* ABOUT SECTION */}
             <div>
               <div>
                 <h3>{about[0].heading}</h3>
-                {about[0].bio.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                {about[0].bio.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
               </div>
             </div>
           </>

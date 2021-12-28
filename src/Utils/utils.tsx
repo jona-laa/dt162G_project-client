@@ -25,3 +25,16 @@ export const elementDisplay = (element: HTMLElement, value: string) => element.s
  * @param   {DOM Eleme} elements   Element/elements to alter
 */
 export const alterBgColor = (offset: number, col1: string, col2: string, ...elements: Array<HTMLElement>): void => elements.forEach(element => window.pageYOffset > window.screen.height - offset ? element.style.background = col1 : element.style.background = col2);
+
+
+
+/** Toggles Element
+  * @param   {number}         fadeMs       Fade speed in milliseconds
+  * @param   {Array<string>}  elements     Element ID/Class, e.g '.feedback'
+*/
+export const toggleElement = (fadeMs, ...elements) => {
+  elements.forEach(e => {
+    $(`${e}`).toggle(fadeMs, function () {
+    });
+  })
+}

@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../context/authContext';
 
 /**
  * Renders Footer
  * @component
  */
-const Footer = () => {
+const Footer: React.FC = (): JSX.Element => {
+  const { authorized, setAuthorized, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
+
+  const handleLoginLogout = (): void => {
+    !authorized ? setLoginFormVisible(!loginFormVisible) : setAuthorized(false)
+  }
+
   return (
     <footer className="bg-dark">
 
       <small>&copy; {new Date().getFullYear()} Jona.Laa.Dev </small>
+      <small> <button aria-label='Close login window' className="login-btn" onClick={() => handleLoginLogout()}>{authorized ? 'Logout' : 'Login'}</button> </small>
 
       <a href="#home" id="goTop" className="btn-top" aria-label="Go To Top">
         <svg className="arrow up" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"

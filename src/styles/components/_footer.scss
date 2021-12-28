@@ -1,12 +1,21 @@
 /* Footer */
 footer {
   @include flex();
-  justify-content: space-around;
+  justify-content: center;
   min-height: 160px;
   padding: $padding-div;
   text-align: center;
 
   small {
     font-size: 1.2rem;
+  }
+
+  .login-btn {
+    background: transparent;
+    border: none;
+    color: $color-light;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

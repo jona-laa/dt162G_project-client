@@ -7,10 +7,13 @@ import Skills from './components/Skills/Skills';
 import Resume from './components/Resume/Resume';
 import Portfolio from './components/Portfolio/Portfolio';
 import Contact from './components/Contact/Contact';
+import { AuthProvider } from './context/authContext';
+import { Login } from './components/Login/Login';
 
 const App: React.FC = (): JSX.Element => {
   return (
-    <>
+    <AuthProvider>
+
       <Header />
       <main>
         <About />
@@ -19,8 +22,9 @@ const App: React.FC = (): JSX.Element => {
         <Portfolio />
         <Contact />
       </main>
+      <Login />
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

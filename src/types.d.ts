@@ -1,7 +1,10 @@
+/*
+  FETCH DATA TYPES
+*/
 interface About {
   _id: string;
   heading: string;
-  bio: Array<string>;
+  bio: string;
   img_src: string;
 }
 
@@ -37,11 +40,19 @@ interface Project {
   descr: string;
 }
 
-// interface ChatFormProps {
-//     preventReload: (e: React.FormEvent<HTMLFormElement>) =>  void
-//     sendMessage: () => void
-// }
+type ItemType = 'about' | 'skill' | 'work' | 'studies' | 'project';
 
-// type ResponseMessage = {
-//     msg: string
-// }
+interface EditItemControlsProps {
+  itemId: string;
+  itemType: ItemType;
+}
+
+/* 
+  CONTEXT TYPES 
+*/
+interface AuthContextType {
+  authorized: boolean;
+  setAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
+  loginFormVisible: boolean;
+  setLoginFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
