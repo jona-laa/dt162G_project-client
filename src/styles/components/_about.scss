@@ -1,3 +1,7 @@
+#about-me {
+  position: relative;
+}
+
 .about-container {
   @include flex(row);
   @include maxWidth(800px) {

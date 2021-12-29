@@ -5,6 +5,10 @@
     ),
     url('../../assets/images/resume-bg.jpg') no-repeat center center/cover;
 
+  .work-section,
+  .studies-section {
+    position: relative;
+  }
   .work,
   .studies {
     margin: auto;

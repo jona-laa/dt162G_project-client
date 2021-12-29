@@ -1,60 +1,64 @@
-.portfolio-container {
-  margin: auto;
-  max-width: 1200px;
+#portfolio {
+  position: relative;
 
-  .portfolio-item_link {
-    transform-style: preserve-3d;
-  }
+  .portfolio-container {
+    margin: auto;
+    max-width: 1200px;
 
-  .portfolio-item {
-    // background: url('../../assets/images/Flipside.jpg') no-repeat center
-    //   center/cover;
-    height: 270px;
-    margin: 15px;
-    padding: 0;
-    position: relative;
-    width: 360px;
-    transition: all 0.75s ease-out;
-
-    @include maxWidth(400px) {
-      width: 300px;
-    }
-    @include maxWidth(340px) {
-      width: 290px;
+    .portfolio-item_link {
+      transform-style: preserve-3d;
     }
 
-    // Covers portfolio item on :hover
-    .portfolio-item_overlay {
-      display: block;
-      // display: none;
-      background-color: rgba(0, 0, 0, 0.75);
-      box-sizing: border-box;
-      height: 100%;
+    .portfolio-item {
+      // background: url('../../assets/images/Flipside.jpg') no-repeat center
+      //   center/cover;
+      height: 270px;
+      margin: 15px;
       padding: 0;
-      position: absolute;
-      width: 100%;
+      position: relative;
+      width: 360px;
       transition: all 0.75s ease-out;
 
-      .portfolio-item_content {
-        @include flex();
-        justify-content: center;
+      @include maxWidth(400px) {
+        width: 300px;
+      }
+      @include maxWidth(340px) {
+        width: 290px;
+      }
+
+      // Covers portfolio item on :hover
+      .portfolio-item_overlay {
+        display: block;
+        // display: none;
+        background-color: rgba(0, 0, 0, 0.75);
+        box-sizing: border-box;
         height: 100%;
+        padding: 0;
+        position: absolute;
         width: 100%;
         transition: all 0.75s ease-out;
 
-        h3 {
-          line-height: 3rem;
-          letter-spacing: 1px;
-          color: $color-light;
-          font-size: 2.8rem;
-          text-transform: uppercase;
+        .portfolio-item_content {
+          @include flex();
+          justify-content: center;
+          height: 100%;
+          width: 100%;
           transition: all 0.75s ease-out;
-        }
 
-        p {
-          line-height: 2rem;
-          color: $color-light;
-          transition: all 0.75s ease-out;
+          h3 {
+            line-height: 3rem;
+            letter-spacing: 1px;
+            color: $color-light;
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            transition: all 0.75s ease-out;
+          }
+
+          p {
+            line-height: 2rem;
+            color: $color-light;
+            transition: all 0.75s ease-out;
+          }
         }
       }
     }

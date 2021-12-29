@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { AuthContext } from '../../context/authContext'
+import AddItemButton from '../AddItemButton/AddItemButton'
 
 /**
  * Renders Portfolio section
@@ -7,6 +9,7 @@ import React, { useEffect, useState } from 'react'
 const Portfolio: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(true)
   const [projects, setProjects] = useState<Array<Project>>([])
+  const { authorized } = useContext(AuthContext)
 
   // Fetch About posts
   useEffect(() => {
@@ -25,7 +28,13 @@ const Portfolio: React.FC = (): JSX.Element => {
 
   return (
     <section id="portfolio" className="section-padding bg-dark">
-      <h2>Portfolio</h2>
+
+      {authorized && <AddItemButton itemType={'project'} color={'white'} />}
+
+      <div className="section-header">
+        <h2>Portfolio</h2>
+      </div>
+
       <div className="divider"></div>
 
       <div className="row trio portfolio-container">

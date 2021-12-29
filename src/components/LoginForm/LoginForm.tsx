@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
 
-export const Login: React.FC = (): JSX.Element => {
+const LoginForm: React.FC = (): JSX.Element => {
   const { setAuthorized, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -11,7 +11,7 @@ export const Login: React.FC = (): JSX.Element => {
   }
 
   return loginFormVisible ? (
-    <div className="login-overlay">
+    <div className="overlay">
 
       <div className="login-container">
         <button onClick={() => setLoginFormVisible(!loginFormVisible)} className="close-btn" aria-label='close login window'><i className="fas fa-window-close"></i></button>
@@ -33,3 +33,5 @@ export const Login: React.FC = (): JSX.Element => {
     </div>
   ) : null
 }
+
+export default LoginForm;

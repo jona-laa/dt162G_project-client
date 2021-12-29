@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import skillsetBg from '../../assets/images/skillset-bg.jpg'
+import AddItemButton from '../AddItemButton/AddItemButton'
+import { AuthContext } from '../../context/authContext'
 
 /**
  * Renders Skills section
@@ -8,6 +10,7 @@ import skillsetBg from '../../assets/images/skillset-bg.jpg'
 const Skills: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(true)
   const [skills, setSkills] = useState<Array<Skill>>([])
+  const { authorized } = useContext(AuthContext)
 
   // Fetch About posts
   useEffect(() => {
@@ -26,6 +29,9 @@ const Skills: React.FC = (): JSX.Element => {
 
   return (
     <section id="skillset" className="bg-dark">
+
+      {authorized && <AddItemButton itemType={'skill'} color={'white'} />}
+
       <h2>Skillset</h2>
       <div className="row duo">
         <div className="col">

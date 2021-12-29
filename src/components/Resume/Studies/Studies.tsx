@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useEffect, useState, useContext } from 'react'
+import { AuthContext } from '../../../context/authContext'
+import AddItemButton from '../../AddItemButton/AddItemButton'
 /**
  * Renders Work section
  * @component
@@ -7,6 +8,7 @@ import React, { useEffect, useState } from 'react'
 const Studies: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(true)
   const [studies, setStudies] = useState<Array<Course>>([])
+  const { authorized } = useContext(AuthContext)
 
   // Fetch About posts
   useEffect(() => {
@@ -24,7 +26,8 @@ const Studies: React.FC = (): JSX.Element => {
   }, [])
 
   return (
-    <>
+    <div className="studies-section">
+      {authorized && <AddItemButton itemType={'studies'} color={'black'} />}
       <h3 className="centered-heading">Studies</h3>
       <div className="row trio studies">
         {loading ? (
@@ -41,7 +44,7 @@ const Studies: React.FC = (): JSX.Element => {
         )}
 
       </div>
-    </>
+    </div>
   )
 }
 

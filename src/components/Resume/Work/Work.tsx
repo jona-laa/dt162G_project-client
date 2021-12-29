@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { AuthContext } from '../../../context/authContext'
+import AddItemButton from '../../AddItemButton/AddItemButton'
 
 /**
  * Renders Work section
@@ -7,6 +9,7 @@ import React, { useEffect, useState } from 'react'
 const Work: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(true)
   const [work, setWork] = useState<Array<Work>>([])
+  const { authorized } = useContext(AuthContext)
 
   // Fetch About posts
   useEffect(() => {
@@ -24,7 +27,8 @@ const Work: React.FC = (): JSX.Element => {
   }, [])
 
   return (
-    <>
+    <div className="work-section">
+      {authorized && <AddItemButton itemType={'work'} color={'black'} />}
       <h3 className="centered-heading">Work</h3>
       <div className="row trio work">
         {loading ? (
@@ -40,7 +44,7 @@ const Work: React.FC = (): JSX.Element => {
           ))
         )}
       </div>
-    </>
+    </div>
   )
 }
 

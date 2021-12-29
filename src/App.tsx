@@ -8,22 +8,26 @@ import Resume from './components/Resume/Resume';
 import Portfolio from './components/Portfolio/Portfolio';
 import Contact from './components/Contact/Contact';
 import { AuthProvider } from './context/authContext';
-import { Login } from './components/Login/Login';
+import LoginForm from './components/LoginForm/LoginForm';
+import { ContentProvider } from './context/contentContext';
+import ContentForm from './components/ContentForm/ContentForm';
 
 const App: React.FC = (): JSX.Element => {
   return (
     <AuthProvider>
-
-      <Header />
-      <main>
-        <About />
-        <Skills />
-        <Resume />
-        <Portfolio />
-        <Contact />
-      </main>
-      <Login />
-      <Footer />
+      <ContentProvider>
+        <Header />
+        <main>
+          <About />
+          <Skills />
+          <Resume />
+          <Portfolio />
+          <Contact />
+          <ContentForm />
+        </main>
+        <LoginForm />
+        <Footer />
+      </ContentProvider>
     </AuthProvider>
   );
 }

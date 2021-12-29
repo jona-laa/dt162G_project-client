@@ -5,7 +5,7 @@ const EditItemControls = ({ itemId, itemType }: EditItemControlsProps): JSX.Elem
   const [editControlsVisible, setEditControlsVisible] = useState<boolean>(false);
 
   return (
-    < div className="edit-menu">
+    <div className="edit-menu">
       {editControlsVisible && (
         <div className="edit-menu__controls">
           {/* DELETE */}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import me from '../../assets/images/me.jpg'
 import { AuthContext } from '../../context/authContext'
+import AddItemButton from '../AddItemButton/AddItemButton'
 import EditItemControls from '../EditItemControls/EditItemControls'
 
 /**
@@ -29,6 +30,8 @@ const About: React.FC = (): JSX.Element => {
 
   return (
     <section id="about-me" className="section-padding bg-light">
+
+      {authorized && <AddItemButton itemType={'about'} color={'black'} />}
 
       <div className="section-header">
         <h2>About Me</h2>

@@ -47,6 +47,11 @@ interface EditItemControlsProps {
   itemType: ItemType;
 }
 
+interface AddItemButtonProps {
+  itemType: ItemType;
+  color: 'black' | 'white';
+}
+
 /* 
   CONTEXT TYPES 
 */
@@ -55,4 +60,16 @@ interface AuthContextType {
   setAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
   loginFormVisible: boolean;
   setLoginFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface ContentContextType {
+  addItem: string | null;
+  setAddItem: React.Dispatch<React.SetStateAction<string | null>>;
+  // updateItem: boolean;
+  // setUpdateItem: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface InputSetState {
+  headingInput: string;
+  setHeadingInput: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -1,4 +1,4 @@
-const fetchData = (endpoint: string, itemId: string) => {
+const fetchDelete = (endpoint: string, itemId: string) => {
   fetch(`http://localhost:4000/${endpoint}`, {
     method: 'DELETE', // or 'PUT'
     mode: 'cors',
@@ -19,27 +19,27 @@ const fetchData = (endpoint: string, itemId: string) => {
 export const deleteItem = (itemId: string, itemType: ItemType) => {
   switch (itemType) {
     case 'about':
-      fetchData('about', itemId);
+      fetchDelete('about', itemId);
       break;
 
     case 'skill':
       console.log('delete skill', itemId)
-      fetchData('skills', itemId);
+      fetchDelete('skills', itemId);
       break;
 
     case 'work':
       console.log('delete work', itemId)
-      fetchData('work', itemId);
+      fetchDelete('work', itemId);
       break;
 
     case 'studies':
       console.log('delete studies', itemId)
-      fetchData('studies', itemId);
+      fetchDelete('studies', itemId);
       break;
 
     case 'project':
       console.log('delete project', itemId)
-      fetchData('projects', itemId);
+      fetchDelete('projects', itemId);
       break;
 
     default:
