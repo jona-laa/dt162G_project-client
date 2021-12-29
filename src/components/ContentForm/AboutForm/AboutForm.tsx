@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 
 const AboutForm = () => {
-  const { addItem, setAddItem } = useContext(ContentContext);
+  const { addItem, setAddItem, updateItem, setUpdateItem } = useContext(ContentContext);
   // Input Values
   const [headingInput, setHeadingInput] = useState<string>('');
   const [bioInput, setBioInput] = useState<string>('');
@@ -37,6 +37,7 @@ const AboutForm = () => {
 
   const handleClose = () => {
     setAddItem(null);
+    setUpdateItem(null);
     setHeadingInput('')
     setBioInput('')
     setImageInput('')
@@ -50,7 +51,7 @@ const AboutForm = () => {
         <form action="" className="content-form" onSubmit={(e) => handleSubmit(e)}>
           <fieldset>
             <legend className="content-form__legend">
-              {addItem ? `Create ${addItem}` : `Update ${addItem}`}
+              {addItem ? `Create ${addItem}` : `Update ${updateItem}`}
             </legend>
 
             <label htmlFor="heading" className="content-form__label">Heading</label>

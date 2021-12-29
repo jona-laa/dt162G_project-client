@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { deleteItem } from '../../services/deleteService';
+import { ContentContext } from '../../context/contentContext';
 
 const EditItemControls = ({ itemId, itemType }: EditItemControlsProps): JSX.Element => {
+  const { setAddItem, setUpdateItem } = useContext(ContentContext)
   const [editControlsVisible, setEditControlsVisible] = useState<boolean>(false);
 
   return (
@@ -23,7 +25,7 @@ const EditItemControls = ({ itemId, itemType }: EditItemControlsProps): JSX.Elem
             className="edit-menu__controls-btn btn update"
             id={`update-${itemId}`}
             value="update"
-          // onClick="initUpdate(${course.id})"
+            onClick={() => setUpdateItem(itemType)}
           >
             <i className="fas fa-pen fa-1x"></i>
           </button>

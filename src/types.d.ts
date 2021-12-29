@@ -65,8 +65,8 @@ interface AuthContextType {
 interface ContentContextType {
   addItem: string | null;
   setAddItem: React.Dispatch<React.SetStateAction<string | null>>;
-  // updateItem: boolean;
-  // setUpdateItem: React.Dispatch<React.SetStateAction<boolean>>;
+  updateItem: string | null;
+  setUpdateItem: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 interface InputSetState {
