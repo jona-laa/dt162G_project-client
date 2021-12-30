@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 
 const StudiesForm = () => {
-  const { addItemType, setAddItemType, updateItemType } = useContext(ContentContext);
+  const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
   // Input Values
   const [institutionInput, setInstitutionInput] = useState<string>('');
   const [titleInput, setTitleInput] = useState<string>('');
@@ -10,22 +10,49 @@ const StudiesForm = () => {
   const [dateEndInput, setDateEndInput] = useState<string>('');
   const [descriptionInput, setDescriptionInput] = useState<string>('');
 
+  // Auto-fill inputs on update form render
+  useEffect(() => {
+    let componentMounted = true;
+    if (updateItemType) {
+      componentMounted && setInstitutionInput(updateItem.institution);
+      componentMounted && setTitleInput(updateItem.title);
+      componentMounted && setDateStartInput(updateItem?.date_start.split('T')[0]);
+      componentMounted && setDateEndInput(updateItem.date_end ? updateItem.date_end.split('T')[0] : '');
+      componentMounted && setDescriptionInput(updateItem.descr);
+    }
+
+    return () => {
+      componentMounted = false;
+    }
+  }, [])
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    const updateBody = {
+      _id: updateItem?._id,
+      institution: institutionInput,
+      title: titleInput,
+      date_start: dateStartInput,
+      date_end: dateEndInput,
+      descr: descriptionInput,
+    }
+
+    const postBody = {
+      institution: institutionInput,
+      title: titleInput,
+      date_start: dateStartInput,
+      date_end: dateEndInput,
+      descr: descriptionInput,
+    }
+
     fetch(`http://localhost:4000/studies`, {
-      method: 'POST', // or 'PUT'
+      method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        institution: institutionInput,
-        title: titleInput,
-        date_start: dateStartInput,
-        date_end: dateEndInput,
-        descr: descriptionInput,
-      }),
+      body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
       .then(res => {
         console.log(res)
@@ -41,6 +68,7 @@ const StudiesForm = () => {
 
   const handleClose = () => {
     setAddItemType(null);
+    setUpdateItemType(null);
     setInstitutionInput('')
     setTitleInput('')
     setDateEndInput('')

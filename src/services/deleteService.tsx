@@ -31,7 +31,6 @@ export const deleteItem = (itemId: string, itemType: ItemType) => {
       break;
 
     case 'studies':
-      console.log('delete studies', itemId)
       fetchDelete('studies', itemId);
       break;
 

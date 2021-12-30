@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../../context/authContext'
 import AddItemButton from '../../AddItemButton/AddItemButton'
+import EditItemControls from '../../EditItemControls/EditItemControls'
+
 /**
- * Renders Work section
+ * Renders Studies section
  * @component
  */
 const Studies: React.FC = (): JSX.Element => {
@@ -35,6 +37,9 @@ const Studies: React.FC = (): JSX.Element => {
         ) : (
           studies.map(course => (
             <div key={course._id} className="resume-item">
+              {/* EDIT CONTROLS IF LOGGED IN */}
+              {authorized &&
+                (<EditItemControls item={course} itemType={'studies'} color={'black'} />)}
               <h4>{course.title}</h4>
               <span>{course.institution}</span><br />
               <span>{course.date_start.split('T')[0]} – {course.date_end.split('T')[0]}</span>
