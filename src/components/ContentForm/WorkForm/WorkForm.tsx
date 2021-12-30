@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 
 const WorkForm = () => {
-  const { addItem, setAddItem } = useContext(ContentContext);
+  const { addItemType, setAddItemType, updateItemType } = useContext(ContentContext);
   // Input Values
   const [companyInput, setCompanyInput] = useState<string>('');
   const [titleInput, setTitleInput] = useState<string>('');
@@ -40,7 +40,7 @@ const WorkForm = () => {
   }
 
   const handleClose = () => {
-    setAddItem(null);
+    setAddItemType(null);
     setCompanyInput('')
     setTitleInput('')
     setDateEndInput('')
@@ -56,7 +56,7 @@ const WorkForm = () => {
         <form action="" className="content-form" onSubmit={(e) => handleSubmit(e)}>
           <fieldset>
             <legend className="content-form__legend">
-              {addItem ? `Create ${addItem}` : `Update ${addItem}`}
+              {addItemType ? `Create ${addItemType}` : `Update ${updateItemType}`}
             </legend>
 
             <label htmlFor="company" className="content-form__label">Company</label>

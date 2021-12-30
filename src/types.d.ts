@@ -43,8 +43,9 @@ interface Project {
 type ItemType = 'about' | 'skill' | 'work' | 'studies' | 'project';
 
 interface EditItemControlsProps {
-  itemId: string;
+  item: About | Skill | Work | Course | Project;
   itemType: ItemType;
+  color: 'black' | 'white';
 }
 
 interface AddItemButtonProps {
@@ -63,10 +64,14 @@ interface AuthContextType {
 }
 
 interface ContentContextType {
-  addItem: string | null;
-  setAddItem: React.Dispatch<React.SetStateAction<string | null>>;
-  updateItem: string | null;
-  setUpdateItem: React.Dispatch<React.SetStateAction<string | null>>;
+  addItemType: string | null;
+  setAddItemType: React.Dispatch<React.SetStateAction<string | null>>;
+  updateItemType: string | null;
+  setUpdateItemType: React.Dispatch<React.SetStateAction<string | null>>;
+  updateItem: any;
+  setUpdateItem: React.Dispatch<
+    React.SetStateAction<About | Skill | Work | Course | Project | null>
+  >;
 }
 
 interface InputSetState {

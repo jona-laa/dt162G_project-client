@@ -7,10 +7,10 @@ import StudiesForm from './StudiesForm/StudiesForm';
 import WorkForm from './WorkForm/WorkForm';
 
 const ContentForm: React.FC = (): JSX.Element => {
-  const { addItem, updateItem } = useContext(ContentContext);
+  const { addItemType, updateItemType } = useContext(ContentContext);
 
   const renderForm = () => {
-    switch (addItem || updateItem) {
+    switch (addItemType || updateItemType) {
       case 'about':
         return <AboutForm />
 
@@ -28,7 +28,7 @@ const ContentForm: React.FC = (): JSX.Element => {
     }
   }
 
-  return (addItem || updateItem) && (
+  return (addItemType || updateItemType) && (
     renderForm()
   )
 }

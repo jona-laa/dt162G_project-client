@@ -1,25 +1,48 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 
 const SkillsForm = () => {
-  const { addItem, setAddItem } = useContext(ContentContext);
+  const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
   // Input Values
   const [nameInput, setNameInput] = useState<string>('');
   const [iconInput, setIconInput] = useState<string>('');
 
+  // Auto-fill inputs on update form render
+  useEffect(() => {
+    let componentMounted = true;
+    if (updateItemType) {
+      componentMounted && setNameInput(updateItem.name);
+      componentMounted && setIconInput(updateItem.icon);
+    }
+
+    return () => {
+      componentMounted = false;
+    }
+  }, [])
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    const updateBody = {
+      _id: updateItem?._id,
+      name: nameInput,
+      icon: iconInput,
+    }
+
+    console.log('updateBody', updateBody)
+
+    const postBody = {
+      name: nameInput,
+      icon: iconInput,
+    }
+
     fetch(`http://localhost:4000/skills`, {
-      method: 'POST', // or 'PUT'
+      method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        name: nameInput,
-        icon: iconInput,
-      }),
+      body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
       .then(res => {
         console.log(res)
@@ -34,7 +57,8 @@ const SkillsForm = () => {
   }
 
   const handleClose = () => {
-    setAddItem(null);
+    setAddItemType(null);
+    setUpdateItemType(null);
     setNameInput('')
     setIconInput('')
   }
@@ -47,7 +71,7 @@ const SkillsForm = () => {
         <form action="" className="content-form" onSubmit={(e) => handleSubmit(e)}>
           <fieldset>
             <legend className="content-form__legend">
-              {addItem ? `Create ${addItem}` : `Update ${addItem}`}
+              {addItemType ? `Create ${addItemType}` : `Update ${updateItemType}`}
             </legend>
 
             <label htmlFor="name" className="content-form__label">Name</label>

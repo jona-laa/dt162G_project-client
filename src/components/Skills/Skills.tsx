@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import skillsetBg from '../../assets/images/skillset-bg.jpg'
 import AddItemButton from '../AddItemButton/AddItemButton'
 import { AuthContext } from '../../context/authContext'
+import EditItemControls from '../EditItemControls/EditItemControls'
 
 /**
  * Renders Skills section
@@ -51,6 +52,9 @@ const Skills: React.FC = (): JSX.Element => {
                     className="skill"
                     key={skill._id}
                   >
+                    {/* EDIT CONTROLS IF LOGGED IN */}
+                    {authorized &&
+                      (<EditItemControls item={skill} itemType={'skill'} color={'white'} />)}
                     <i
                       className={skill.icon + ' fa-3x'}
                       aria-hidden="true"></i>

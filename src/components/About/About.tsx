@@ -46,7 +46,7 @@ const About: React.FC = (): JSX.Element => {
           <>
             {/* EDIT CONTROLS IF LOGGED IN */}
             {authorized && about.length > 0 &&
-              (<EditItemControls itemId={about[0]._id} itemType={'about'} />)}
+              (<EditItemControls item={about[0]} itemType={'about'} color={'black'} />)}
 
             {/* AVATAR */}
             <div className="avatar-container">

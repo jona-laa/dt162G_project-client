@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { ContentContext } from '../../context/contentContext';
 
 const AddItemButton = ({ itemType, color }: AddItemButtonProps): JSX.Element => {
-  const { setAddItem } = useContext(ContentContext)
+  const { setAddItemType } = useContext(ContentContext)
 
   return (
     <button
@@ -12,7 +12,7 @@ const AddItemButton = ({ itemType, color }: AddItemButtonProps): JSX.Element => 
       }}
       aria-label={`add ${itemType} item`}
       value={`add ${itemType} item`}
-      onClick={() => setAddItem(itemType)}
+      onClick={() => setAddItemType(itemType)}
     >
       +
     </button>

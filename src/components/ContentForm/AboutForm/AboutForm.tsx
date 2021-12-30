@@ -1,27 +1,50 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 
 const AboutForm = () => {
-  const { addItem, setAddItem, updateItem, setUpdateItem } = useContext(ContentContext);
+  const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
   // Input Values
   const [headingInput, setHeadingInput] = useState<string>('');
   const [bioInput, setBioInput] = useState<string>('');
   const [imageInput, setImageInput] = useState<string>('');
 
+  // Auto-fill inputs on update form render
+  useEffect(() => {
+    let componentMounted = true;
+    if (updateItemType) {
+      componentMounted && setHeadingInput(updateItem.heading);
+      componentMounted && setBioInput(updateItem.bio);
+      componentMounted && setImageInput(updateItem.img_src);
+    }
+
+    return () => {
+      componentMounted = false;
+    }
+  }, [])
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    const updateBody = {
+      _id: updateItem?._id,
+      heading: headingInput,
+      bio: bioInput,
+      img_src: imageInput,
+    }
+
+    const postBody = {
+      heading: headingInput,
+      bio: bioInput,
+      img_src: imageInput,
+    }
+
     fetch(`http://localhost:4000/about`, {
-      method: 'POST', // or 'PUT'
+      method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        heading: headingInput,
-        bio: bioInput,
-        img_src: imageInput,
-      }),
+      body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
       .then(res => {
         console.log(res)
@@ -36,8 +59,8 @@ const AboutForm = () => {
   }
 
   const handleClose = () => {
-    setAddItem(null);
-    setUpdateItem(null);
+    setAddItemType(null);
+    setUpdateItemType(null);
     setHeadingInput('')
     setBioInput('')
     setImageInput('')
@@ -51,7 +74,7 @@ const AboutForm = () => {
         <form action="" className="content-form" onSubmit={(e) => handleSubmit(e)}>
           <fieldset>
             <legend className="content-form__legend">
-              {addItem ? `Create ${addItem}` : `Update ${updateItem}`}
+              {addItemType ? `Create ${addItemType}` : `Update ${updateItemType}`}
             </legend>
 
             <label htmlFor="heading" className="content-form__label">Heading</label>

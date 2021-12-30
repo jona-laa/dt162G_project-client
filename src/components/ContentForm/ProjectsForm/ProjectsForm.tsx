@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 
 const ProjectsForm = () => {
-  const { addItem, setAddItem } = useContext(ContentContext);
+  const { addItemType, setAddItemType } = useContext(ContentContext);
   // Input Values
   const [titleInput, setTitleInput] = useState<string>('');
   const [projectUrlInput, setProjectUrlInput] = useState<string>('');
@@ -38,7 +38,7 @@ const ProjectsForm = () => {
   }
 
   const handleClose = () => {
-    setAddItem(null);
+    setAddItemType(null);
     setTitleInput('')
     setProjectUrlInput('')
     setImageInput('')
@@ -53,7 +53,7 @@ const ProjectsForm = () => {
         <form action="" className="content-form" onSubmit={(e) => handleSubmit(e)}>
           <fieldset>
             <legend className="content-form__legend">
-              {addItem ? `Create ${addItem}` : `Update ${addItem}`}
+              {addItemType ? `Create ${addItemType}` : `Update ${addItemType}`}
             </legend>
 
             <label htmlFor="title" className="content-form__label">Title</label>

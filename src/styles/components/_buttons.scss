@@ -48,16 +48,16 @@
 /* Edit Item Controls */
 .edit-menu {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0px;
+  right: 0px;
   z-index: 1;
   @include flex(row);
 
   .edit-menu__toggle-controls {
     background: transparent;
     border: none;
-    width: 30px;
-    padding: 10px 0;
+    width: 20px;
+    padding: 5px 0;
 
     &:hover {
       cursor: pointer;
@@ -70,22 +70,22 @@
 
   .edit-menu__controls {
     .edit-menu__controls-btn {
-      padding: 5px 10px;
+      padding: 2.5px 7.5px;
       border: none;
       color: $color-light;
-      transition: 2s ease-in;
+      max-width: calc(50% - 3px);
 
       &:hover {
-        box-shadow: 1px 1px 20px lightgray;
+        opacity: 0.9;
       }
     }
 
     .delete {
-      background-color: red;
+      background-color: rgba(255, 0, 0, 0.9);
     }
 
     .update {
-      background-color: rgb(0, 174, 255);
+      background-color: rgba(0, 174, 255, 0.9);
       margin-left: 5px;
     }
   }
