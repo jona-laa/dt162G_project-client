@@ -29,8 +29,6 @@ const SkillsForm = () => {
       icon: iconInput,
     }
 
-    console.log('updateBody', updateBody)
-
     const postBody = {
       name: nameInput,
       icon: iconInput,

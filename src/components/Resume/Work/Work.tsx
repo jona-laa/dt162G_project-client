@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../../context/authContext'
 import AddItemButton from '../../AddItemButton/AddItemButton'
+import EditItemControls from '../../EditItemControls/EditItemControls'
 
 /**
  * Renders Work section
@@ -36,9 +37,12 @@ const Work: React.FC = (): JSX.Element => {
         ) : (
           work.map(job => (
             <div key={job._id} className="resume-item">
+              {/* EDIT CONTROLS IF LOGGED IN */}
+              {authorized &&
+                (<EditItemControls item={job} itemType={'work'} color={'black'} />)}
               <h4>{job.company}</h4>
               <span>{job.title}</span><br />
-              <span>{job?.date_start?.split('T')[0]} – {job?.date_end?.split('T')[0]}</span>
+              <span>{job?.date_start?.split('T')[0]} – {job.date_end ? job?.date_end?.split('T')[0] : 'current'}</span>
               <p>{job.descr}</p>
             </div>
           ))

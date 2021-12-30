@@ -27,7 +27,6 @@ export const deleteItem = (itemId: string, itemType: ItemType) => {
       break;
 
     case 'work':
-      console.log('delete work', itemId)
       fetchDelete('work', itemId);
       break;
 
