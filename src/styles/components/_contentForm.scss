@@ -48,6 +48,9 @@
     }
 
     .content-form__submit-btn {
+      font-weight: bold;
+      font-size: 16px;
+
       &:hover {
         cursor: pointer;
       }
@@ -55,6 +58,10 @@
       &:active {
         box-shadow: 0px 1px 2px lightgray;
       }
+    }
+
+    .form-feedback__text {
+      color: red;
     }
   }
 }

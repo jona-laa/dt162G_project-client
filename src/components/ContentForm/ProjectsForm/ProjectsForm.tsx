@@ -9,6 +9,8 @@ const ProjectsForm = () => {
   const [projectUrlInput, setProjectUrlInput] = useState<string>('');
   const [imageInput, setImageInput] = useState<string>('');
   const [descriptionInput, setDescriptionInput] = useState<string>('');
+  // Form error feedback
+  const [formError, setFormError] = useState<string | null>(null);
 
   // Auto-fill inputs on update form render
   useEffect(() => {
@@ -52,11 +54,18 @@ const ProjectsForm = () => {
       body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
       .then(res => {
-        console.log(res)
+        if (res.status === 200) {
+          handleClose();
+          // setFeedback({
+          //   type: 'success',
+          //   title: 'Success!',
+          //   body: 'New work item created!'
+          // })
+        }
         return res.json()
       })
       .then(data => {
-        console.log('Success:', data);
+        data.errors && setFormError(data.message);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -66,10 +75,6 @@ const ProjectsForm = () => {
   const handleClose = () => {
     setAddItemType(null);
     setUpdateItemType(null);
-    setTitleInput('')
-    setProjectUrlInput('')
-    setImageInput('')
-    setDescriptionInput('')
   }
 
   return (
@@ -138,9 +143,11 @@ const ProjectsForm = () => {
             <input type="submit" value="Submit" className="content-form__submit-btn" />
           </fieldset>
 
-          <div className="form-feedback">
-            <p className="form-feedback__text">Content is missing</p>
-          </div>
+          {formError && (<div className="form-feedback">
+            {formError.split(',').map((error, index) => (
+              <p key={index} className="form-feedback__text">{error}</p>
+            ))}
+          </div>)}
         </form>
 
       </div>

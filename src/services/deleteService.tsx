@@ -39,6 +39,11 @@ export const deleteItem = (itemId: string, itemType: ItemType) => {
       break;
 
     default:
+      // setFeedback({
+      //   type: 'error',
+      //   title: 'Oops...',
+      //   body: 'Seems like something went wrong. Try again.'
+      // })
       break;
   }
 }
