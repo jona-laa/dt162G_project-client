@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../context/authContext'
 import AddItemButton from '../AddItemButton/AddItemButton'
+import EditItemControls from '../EditItemControls/EditItemControls'
+
+import flipside from '../../assets/images/Flipside.jpg'
 
 /**
  * Renders Portfolio section
@@ -42,26 +45,28 @@ const Portfolio: React.FC = (): JSX.Element => {
           <div className="loader"></div>
         ) : (
           projects.map(project => (
-            <a key={project._id} href={project.prj_url}
-              rel="noreferrer" className="portfolio-item_link"
-              target="_blank">
-              <div
-                className="portfolio-item"
-
-                style={{
-                  backgroundImage: `url(../../assets/images/Flipside.jpg)`,
-                  // background: `url(../../assets/images/Flipside.jpg) no-repeat center center/cover`,
-                  backgroundPosition: "center"
-                }}
-              >
-                <div className="portfolio-item_overlay">
+            <div
+              key={project._id}
+              className="portfolio-item"
+              style={{
+                background: `url(${flipside}) no-repeat center center/cover`,
+              }}
+            >
+              {/* EDIT CONTROLS IF LOGGED IN */}
+              {authorized &&
+                (<EditItemControls item={project} itemType={'project'} color={'white'} />)}
+              <div className="portfolio-item_overlay">
+                <a key={project._id} href={project.prj_url}
+                  target="_blank"
+                  rel="noreferrer" >
                   <div className="portfolio-item_content">
-                    <h3>{project.title}</h3>
+                    <h3>
+                      {project.title}</h3>
                     <p>{project.descr}</p>
                   </div>
-                </div>
+                </a>
               </div>
-            </a>
+            </div>
           ))
         )}
       </div>

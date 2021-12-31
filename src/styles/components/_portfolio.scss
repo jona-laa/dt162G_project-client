@@ -4,27 +4,22 @@
   .portfolio-container {
     margin: auto;
     max-width: 1200px;
+    justify-content: center !important;
+    align-items: center !important;
 
     .portfolio-item_link {
       transform-style: preserve-3d;
+      position: relative;
     }
 
     .portfolio-item {
-      // background: url('../../assets/images/Flipside.jpg') no-repeat center
-      //   center/cover;
-      height: 270px;
-      margin: 15px;
+      margin: 20px;
       padding: 0;
       position: relative;
-      width: 360px;
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 4/3;
       transition: all 0.75s ease-out;
-
-      @include maxWidth(400px) {
-        width: 300px;
-      }
-      @include maxWidth(340px) {
-        width: 290px;
-      }
 
       // Covers portfolio item on :hover
       .portfolio-item_overlay {

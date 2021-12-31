@@ -1,29 +1,55 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 
+
 const ProjectsForm = () => {
-  const { addItemType, setAddItemType } = useContext(ContentContext);
+  const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
   // Input Values
   const [titleInput, setTitleInput] = useState<string>('');
   const [projectUrlInput, setProjectUrlInput] = useState<string>('');
   const [imageInput, setImageInput] = useState<string>('');
   const [descriptionInput, setDescriptionInput] = useState<string>('');
 
+  // Auto-fill inputs on update form render
+  useEffect(() => {
+    let componentMounted = true;
+    if (updateItemType) {
+      componentMounted && setTitleInput(updateItem.title);
+      componentMounted && setProjectUrlInput(updateItem.prj_url);
+      componentMounted && setImageInput(updateItem.img_src);
+      componentMounted && setDescriptionInput(updateItem.descr);
+    }
+
+    return () => {
+      componentMounted = false;
+    }
+  }, [])
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    const updateBody = {
+      _id: updateItem?._id,
+      title: titleInput,
+      prj_url: projectUrlInput,
+      img_src: imageInput,
+      descr: descriptionInput,
+    }
+
+    const postBody = {
+      title: titleInput,
+      prj_url: projectUrlInput,
+      img_src: imageInput,
+      descr: descriptionInput,
+    }
+
     fetch(`http://localhost:4000/projects`, {
-      method: 'POST', // or 'PUT'
+      method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        title: titleInput,
-        project_url: projectUrlInput,
-        img_src: imageInput,
-        descr: descriptionInput,
-      }),
+      body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
       .then(res => {
         console.log(res)
@@ -39,6 +65,7 @@ const ProjectsForm = () => {
 
   const handleClose = () => {
     setAddItemType(null);
+    setUpdateItemType(null);
     setTitleInput('')
     setProjectUrlInput('')
     setImageInput('')
