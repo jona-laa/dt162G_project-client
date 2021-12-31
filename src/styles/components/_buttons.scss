@@ -47,17 +47,21 @@
 
 /* Edit Item Controls */
 .edit-menu {
+  justify-content: flex-end;
   position: absolute;
-  top: 0px;
+  padding: 0 !important;
   right: 0px;
+  top: 0px;
   z-index: 1;
   @include flex(row);
+  width: 100%;
 
   .edit-menu__toggle-controls {
     background: transparent;
     border: none;
-    width: 20px;
+    margin-left: 2.5px;
     padding: 5px 0;
+    width: 20px;
 
     &:hover {
       cursor: pointer;
@@ -69,11 +73,14 @@
   }
 
   .edit-menu__controls {
+    @include flex('row');
+    justify-content: flex-end;
+    padding: 0 !important;
+
     .edit-menu__controls-btn {
-      padding: 2.5px 7.5px;
       border: none;
       color: $color-light;
-      max-width: calc(50% - 3px);
+      padding: 2.5px 7.5px;
 
       &:hover {
         opacity: 0.9;
