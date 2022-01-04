@@ -16,7 +16,7 @@ const Work: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/work')
+    fetch('http://localhost:4000/api/content/work')
       .then(res => res.json())
       .then(data => componentMounted && setWork(data))
       .catch(error => console.log(`Error: ${error} fetching Work data in component Work.tsx`))

@@ -59,6 +59,8 @@ interface AddItemButtonProps {
 interface AuthContextType {
   authorized: boolean;
   setAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
+  authToken: string | null;
+  setAuthToken: React.Dispatch<React.SetStateAction<string | null>>;
   loginFormVisible: boolean;
   setLoginFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }

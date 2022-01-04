@@ -40,7 +40,7 @@ const AboutForm = () => {
       img_src: imageInput,
     }
 
-    fetch(`http://localhost:4000/about`, {
+    fetch(`http://localhost:4000/api/content/about`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {

@@ -17,7 +17,7 @@ const Skills: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/skills')
+    fetch('http://localhost:4000/api/content/skills')
       .then(res => res.json())
       .then(data => componentMounted && setSkills(data))
       .catch(error => console.log(`Error: ${error} fetching Skills data in component Skills.tsx`))

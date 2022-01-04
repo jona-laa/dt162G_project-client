@@ -36,7 +36,7 @@ const SkillsForm = () => {
       icon: iconInput,
     }
 
-    fetch(`http://localhost:4000/skills`, {
+    fetch(`http://localhost:4000/api/content/skills`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {

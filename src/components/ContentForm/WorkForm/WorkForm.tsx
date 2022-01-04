@@ -48,7 +48,7 @@ const WorkForm = () => {
       descr: descriptionInput,
     }
 
-    fetch(`http://localhost:4000/work`, {
+    fetch(`http://localhost:4000/api/content/work`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {

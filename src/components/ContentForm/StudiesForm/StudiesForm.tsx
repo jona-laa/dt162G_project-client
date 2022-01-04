@@ -48,7 +48,7 @@ const StudiesForm = () => {
       descr: descriptionInput,
     }
 
-    fetch(`http://localhost:4000/studies`, {
+    fetch(`http://localhost:4000/api/content/studies`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {

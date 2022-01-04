@@ -1,5 +1,5 @@
 const fetchDelete = (endpoint: string, itemId: string) => {
-  fetch(`http://localhost:4000/${endpoint}`, {
+  fetch(`http://localhost:4000/api/content/${endpoint}`, {
     method: 'DELETE', // or 'PUT'
     mode: 'cors',
     headers: {

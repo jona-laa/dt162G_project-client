@@ -45,7 +45,7 @@ const ProjectsForm = () => {
       descr: descriptionInput,
     }
 
-    fetch(`http://localhost:4000/projects`, {
+    fetch(`http://localhost:4000/api/content/projects`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {

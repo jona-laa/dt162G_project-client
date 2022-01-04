@@ -17,7 +17,7 @@ const About: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/about')
+    fetch('http://localhost:4000/api/content/about')
       .then(res => res.json())
       .then(data => componentMounted && setAbout(data))
       .catch(error => console.log(`Error: ${error} fetching About data in component About.tsx`))
@@ -62,7 +62,7 @@ const About: React.FC = (): JSX.Element => {
             <div>
               <div>
                 <h3>{about[0].heading}</h3>
-                {about[0].bio.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                {about[0]?.bio?.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
               </div>
             </div>
           </>
