@@ -1,4 +1,4 @@
-export const setCookie = (name, value, days) => {
+export const setCookie = (name: string, value: string, days: number): void => {
   let expires = "";
   if (days) {
     let date = new Date();
@@ -8,7 +8,7 @@ export const setCookie = (name, value, days) => {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-export const getCookie = (name) => {
+export const getCookie = (name: string): string | null => {
   let nameEQ = name + "=";
   let ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
@@ -19,6 +19,6 @@ export const getCookie = (name) => {
   return null;
 }
 
-export const deleteCookie = (name) => {
+export const deleteCookie = (name: string): void => {
   document.cookie = name + '=; Max-Age=-99999999;';
 }

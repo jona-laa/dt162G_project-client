@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../context/authContext'
+import { ContentContext } from '../../context/contentContext'
 import AddItemButton from '../AddItemButton/AddItemButton'
 import EditItemControls from '../EditItemControls/EditItemControls'
 
@@ -10,9 +11,9 @@ import flipside from '../../assets/images/Flipside.jpg'
  * @component 
  */
 const Portfolio: React.FC = (): JSX.Element => {
-  const [loading, setLoading] = useState(true)
-  const [projects, setProjects] = useState<Array<Project>>([])
   const { authorized } = useContext(AuthContext)
+  const { projects, setProjects } = useContext(ContentContext);
+  const [loading, setLoading] = useState(true)
 
   // Fetch About posts
   useEffect(() => {

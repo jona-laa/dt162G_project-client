@@ -3,13 +3,22 @@ import { AuthContext } from '../../../context/authContext';
 import { ContentContext } from '../../../context/contentContext';
 
 const AboutForm = () => {
-  const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
+  // App State - Context
+  const {
+    addItemType,
+    setAddItemType,
+    updateItemType,
+    setUpdateItemType,
+    updateItem,
+    about,
+    setAbout
+  } = useContext(ContentContext);
   const { authToken } = useContext(AuthContext);
-  // Input Values
+  // Component State - Input Values
   const [headingInput, setHeadingInput] = useState<string>('');
   const [bioInput, setBioInput] = useState<string>('');
   const [imageInput, setImageInput] = useState<string>('');
-  // Form error feedback
+  // Component State - Form error feedback
   const [formError, setFormError] = useState<string | null>(null);
 
   // Auto-fill inputs on update form render
@@ -55,17 +64,34 @@ const AboutForm = () => {
       .then(res => {
         if (res.status === 200) {
           handleClose();
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'New work item created!'
-          // })
         }
         return res.json()
       })
       .then(data => {
-        console.log(data)
-        // data && setFormError(data.message);
+        if (!updateItemType && !data.error) {
+          setAbout([...about, data])
+          // setFeedback({
+          //   type: 'success',
+          //   title: 'Success!',
+          //   body: 'New about item created!'
+          // })
+        }
+        else if (updateItemType && !data.error) {
+          const aboutCopy = [...about];
+          const itemToUpdate = aboutCopy.filter(item => item._id === data?._id)[0];
+          itemToUpdate.bio = data.bio;
+          itemToUpdate.heading = data.heading;
+          itemToUpdate.img_src = data.img_src;
+          setAbout(aboutCopy)
+          // setFeedback({
+          //   type: 'success',
+          //   title: 'Success!',
+          //   body: 'Item Updated!'
+          // })
+        }
+        else {
+          setFormError(data.error);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

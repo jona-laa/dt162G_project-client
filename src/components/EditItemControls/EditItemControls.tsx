@@ -1,9 +1,13 @@
 import React, { useState, useContext } from 'react'
 import { deleteItem } from '../../services/deleteService';
 import { ContentContext } from '../../context/contentContext';
+import { AuthContext } from '../../context/authContext';
 
 const EditItemControls = ({ item, itemType, color }: EditItemControlsProps): JSX.Element => {
-  const { setUpdateItemType, setUpdateItem } = useContext(ContentContext)
+  // App State - Context
+  const { setUpdateItemType, setUpdateItem } = useContext(ContentContext);
+  const { authToken } = useContext(AuthContext);
+  // Component State - Show Controls or Not
   const [editControlsVisible, setEditControlsVisible] = useState<boolean>(false);
 
   return (
@@ -15,7 +19,7 @@ const EditItemControls = ({ item, itemType, color }: EditItemControlsProps): JSX
             className="edit-menu__controls-btn btn delete"
             id={`delete-${item._id}`}
             value="delete"
-            onClick={() => deleteItem(item._id, itemType)}
+            onClick={() => deleteItem(item._id, itemType, authToken)}
           >
             <i className="fas fa-trash-alt fa-1x"></i>
           </button>

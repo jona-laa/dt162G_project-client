@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import me from '../../assets/images/me.jpg'
 import { AuthContext } from '../../context/authContext'
+import { ContentContext } from '../../context/contentContext'
 import AddItemButton from '../AddItemButton/AddItemButton'
 import EditItemControls from '../EditItemControls/EditItemControls'
 
@@ -9,9 +10,9 @@ import EditItemControls from '../EditItemControls/EditItemControls'
  * @component
  */
 const About: React.FC = (): JSX.Element => {
-  const [loading, setLoading] = useState<boolean>(true)
-  const [about, setAbout] = useState<Array<About>>([])
   const { authorized } = useContext(AuthContext)
+  const { about, setAbout } = useContext(ContentContext);
+  const [loading, setLoading] = useState<boolean>(true)
 
   // Fetch About posts
   useEffect(() => {
@@ -43,29 +44,30 @@ const About: React.FC = (): JSX.Element => {
         {loading ? (
           <div className="loader"></div>
         ) : (
-          <>
-            {/* EDIT CONTROLS IF LOGGED IN */}
-            {authorized && about.length > 0 &&
-              (<EditItemControls item={about[0]} itemType={'about'} color={'black'} />)}
+          about.map(about => (
+            <div className="about-item" key={about._id}>
+              {/* EDIT CONTROLS IF LOGGED IN */}
+              {authorized &&
+                (<EditItemControls item={about} itemType={'about'} color={'black'} />)}
 
-            {/* AVATAR */}
-            <div className="avatar-container">
-              <div className="avatar"
-                style={{
-                  background: `url(${me}) no-repeat center center/cover`,
-                  backgroundPosition: "center"
-                }}
-              ></div>
-            </div>
-
-            {/* ABOUT SECTION */}
-            <div>
-              <div>
-                <h3>{about[0].heading}</h3>
-                {about[0]?.bio?.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+              {/* AVATAR */}
+              <div className="avatar-container">
+                <div className="avatar"
+                  style={{
+                    background: `url(${me}) no-repeat center center/cover`,
+                    backgroundPosition: "center"
+                  }}
+                ></div>
               </div>
-            </div>
-          </>
+
+              {/* ABOUT SECTION */}
+              <div>
+                <div>
+                  <h3>{about.heading}</h3>
+                  {about?.bio?.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                </div>
+              </div>
+            </div>))
         )}
       </div>
 

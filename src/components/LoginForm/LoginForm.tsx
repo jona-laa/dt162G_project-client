@@ -8,11 +8,13 @@ const LoginForm: React.FC = (): JSX.Element => {
   // Input Values
   const [usernameInput, setUsernameInput] = useState<string>('');
   const [passwordInput, setPasswordInput] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   // Form error feedback
   const [formError, setFormError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setLoading(true);
 
     fetch(`http://localhost:4000/api/auth/login`, {
       method: 'POST',
@@ -44,7 +46,8 @@ const LoginForm: React.FC = (): JSX.Element => {
         //   title: 'Oops...',
         //   body: 'Something went wrong. Try again.'
         // })
-      });
+      })
+      .finally(() => setLoading(false));
   }
 
   return loginFormVisible ? (
@@ -80,9 +83,20 @@ const LoginForm: React.FC = (): JSX.Element => {
             <input type="submit" value="Log In" className="login-form__submit-btn" />
           </fieldset>
 
-          {formError && (<div className="form-feedback">
-            <p className="form-feedback__text">{formError}</p>
-          </div>)}
+          {loading && (
+            <div className='overlay'>
+              <div className='login-form__loader-wrapper'>
+                <div className="loader"></div>
+                <p style={{ color: 'white' }}>Logging In...</p>
+              </div>
+            </div>
+          )}
+
+          {formError && (
+            <div className="form-feedback">
+              <p className="form-feedback__text">{formError}</p>
+            </div>
+          )}
         </form>
       </div>
     </div>

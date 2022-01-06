@@ -1,9 +1,20 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { ContentContext } from '../../../context/contentContext';
+import { AuthContext } from '../../../context/authContext';
 
 const WorkForm = () => {
-  const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
-  // Input Values
+  // App State - Context
+  const {
+    addItemType,
+    setAddItemType,
+    updateItemType,
+    setUpdateItemType,
+    updateItem,
+    work,
+    setWork
+  } = useContext(ContentContext);
+  const { authToken } = useContext(AuthContext);
+  // Component State - Input Values
   const [companyInput, setCompanyInput] = useState<string>('');
   const [titleInput, setTitleInput] = useState<string>('');
   const [dateStartInput, setDateStartInput] = useState<string>('');
@@ -53,22 +64,44 @@ const WorkForm = () => {
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
+        'jwt': authToken
       },
       body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
       .then(res => {
         if (res.status === 200) {
           handleClose();
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'New work item created!'
-          // })
         }
         return res.json()
       })
       .then(data => {
-        data.errors && setFormError(data.message);
+        if (!updateItemType && !data.error) {
+          setWork([...work, data])
+          // setFeedback({
+          //   type: 'success',
+          //   title: 'Success!',
+          //   body: 'New about item created!'
+          // })
+        }
+        else if (updateItemType && !data.error) {
+          const workCopy = [...work];
+          const itemToUpdate = workCopy.filter(item => item._id === data?._id)[0];
+          itemToUpdate.company = data.company;
+          itemToUpdate.title = data.title;
+          itemToUpdate.date_start = data.date_start;
+          itemToUpdate.date_end = data.date_end;
+          itemToUpdate.descr = data.descr;
+
+          setWork(workCopy)
+          // setFeedback({
+          //   type: 'success',
+          //   title: 'Success!',
+          //   body: 'Item Updated!'
+          // })
+        }
+        else {
+          setFormError(data.error);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

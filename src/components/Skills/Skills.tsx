@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import skillsetBg from '../../assets/images/skillset-bg.jpg'
 import AddItemButton from '../AddItemButton/AddItemButton'
 import { AuthContext } from '../../context/authContext'
+import { ContentContext } from '../../context/contentContext'
 import EditItemControls from '../EditItemControls/EditItemControls'
 
 /**
@@ -9,9 +10,9 @@ import EditItemControls from '../EditItemControls/EditItemControls'
  * @component
  */
 const Skills: React.FC = (): JSX.Element => {
-  const [loading, setLoading] = useState(true)
-  const [skills, setSkills] = useState<Array<Skill>>([])
   const { authorized } = useContext(AuthContext)
+  const { skills, setSkills } = useContext(ContentContext);
+  const [loading, setLoading] = useState(true)
 
   // Fetch About posts
   useEffect(() => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../../context/authContext'
+import { ContentContext } from '../../../context/contentContext'
 import AddItemButton from '../../AddItemButton/AddItemButton'
 import EditItemControls from '../../EditItemControls/EditItemControls'
 
@@ -8,9 +9,9 @@ import EditItemControls from '../../EditItemControls/EditItemControls'
  * @component
  */
 const Studies: React.FC = (): JSX.Element => {
-  const [loading, setLoading] = useState(true)
-  const [studies, setStudies] = useState<Array<Course>>([])
   const { authorized } = useContext(AuthContext)
+  const { studies, setStudies } = useContext(ContentContext);
+  const [loading, setLoading] = useState(true)
 
   // Fetch About posts
   useEffect(() => {

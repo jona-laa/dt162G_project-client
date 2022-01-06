@@ -74,6 +74,16 @@ interface ContentContextType {
   setUpdateItem: React.Dispatch<
     React.SetStateAction<About | Skill | Work | Course | Project | null>
   >;
+  about: Array<About>;
+  setAbout: React.Dispatch<React.SetStateAction<Array<About>>>;
+  skills: Array<Skills>;
+  setSkills: React.Dispatch<React.SetStateAction<Array<Skill>>>;
+  work: Array<Work>;
+  setWork: React.Dispatch<React.SetStateAction<Array<Work>>>;
+  studies: Array<Course>;
+  setStudies: React.Dispatch<React.SetStateAction<Array<Course>>>;
+  projects: Array<Project>;
+  setProjects: React.Dispatch<React.SetStateAction<Array<Project>>>;
 }
 
 interface InputSetState {

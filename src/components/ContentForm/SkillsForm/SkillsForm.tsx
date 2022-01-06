@@ -1,12 +1,23 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react';
+import { AuthContext } from '../../../context/authContext';
 import { ContentContext } from '../../../context/contentContext';
 
 const SkillsForm = () => {
-  const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
-  // Input Values
+  // App State - Context
+  const {
+    addItemType,
+    setAddItemType,
+    updateItemType,
+    setUpdateItemType,
+    updateItem,
+    skills,
+    setSkills
+  } = useContext(ContentContext);
+  const { authToken } = useContext(AuthContext);
+  // Component State - Input Values
   const [nameInput, setNameInput] = useState<string>('');
   const [iconInput, setIconInput] = useState<string>('');
-  // Form error feedback
+  // Component State - Form error feedback
   const [formError, setFormError] = useState<string | null>(null);
 
   // Auto-fill inputs on update form render
@@ -21,6 +32,8 @@ const SkillsForm = () => {
       componentMounted = false;
     }
   }, [])
+
+  console.log(authToken)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -41,22 +54,41 @@ const SkillsForm = () => {
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
+        'jwt': authToken
       },
       body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
       .then(res => {
         if (res.status === 200) {
           handleClose();
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'New work item created!'
-          // })
         }
         return res.json()
       })
       .then(data => {
-        data.errors && setFormError(data.message);
+        console.log(data)
+        if (!updateItemType && !data.error) {
+          setSkills([...skills, data])
+          // setFeedback({
+          //   type: 'success',
+          //   title: 'Success!',
+          //   body: 'New about item created!'
+          // })
+        }
+        else if (updateItemType && !data.error) {
+          const skillsCopy = [...skills];
+          const itemToUpdate = skillsCopy.filter(item => item._id === data?._id)[0];
+          itemToUpdate.name = data.name;
+          itemToUpdate.icon = data.icon;
+          setSkills(skillsCopy)
+          // setFeedback({
+          //   type: 'success',
+          //   title: 'Success!',
+          //   body: 'Item Updated!'
+          // })
+        }
+        else {
+          setFormError(data.error);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

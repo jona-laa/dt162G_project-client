@@ -48,6 +48,10 @@
         cursor: pointer;
       }
     }
+
+    .login-form__loader-wrapper {
+      @include flex();
+    }
   }
 
   .login-feedback {
