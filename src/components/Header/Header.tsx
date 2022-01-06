@@ -1,5 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
+import { AuthContext } from '../../context/authContext';
+import { deleteCookie } from '../../services/cookieService';
 import { elementDisplay, elementToggle, alterBgColor } from '../../Utils/utils';
+
 // import gsap from "gsap";
 
 /**
@@ -12,6 +15,8 @@ const Header = () => {
   const mainMenuToggleRef = useRef<null | HTMLButtonElement>();
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
   const [currentScrollPos, setCurrentScrollPos] = useState(null);
+  const { authorized, setAuthorized } = useContext(AuthContext)
+
 
   // TOGGLE MENU
   const toggleMenu = () => {
@@ -77,6 +82,16 @@ const Header = () => {
     // screen.width < 813 ? alterBgColor(300, 'rgba(0, 0, 0, 0.6)', 'transparent', mainMenu) : null;
   };
 
+  const handleLogout = () => {
+    setAuthorized(false)
+    deleteCookie('jwt')
+    // setFeedback({
+    //   type: 'success',
+    //   title: 'Logged Out',
+    //   body: 'You have been logged out'
+    // })
+  }
+
   return (
     <header className="hero">
       <div className="header-content" ref={headerRef}>
@@ -98,6 +113,7 @@ const Header = () => {
             <li><a href="#skillset" className="menu-link">Skillset</a></li>
             <li><a href="#resume" className="menu-link">Resume</a></li>
             <li><a href="#portfolio" className="menu-link">Portfolio</a></li>
+            {authorized && <li><button className="menu-link" onClick={() => handleLogout()}>Log Out</button></li>}
           </ul>
         </nav>
         <div className="social">

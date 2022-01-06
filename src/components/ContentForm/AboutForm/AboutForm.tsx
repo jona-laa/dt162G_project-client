@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { AuthContext } from '../../../context/authContext';
 import { ContentContext } from '../../../context/contentContext';
 
 const AboutForm = () => {
   const { addItemType, setAddItemType, updateItemType, setUpdateItemType, updateItem } = useContext(ContentContext);
+  const { authToken } = useContext(AuthContext);
   // Input Values
   const [headingInput, setHeadingInput] = useState<string>('');
   const [bioInput, setBioInput] = useState<string>('');
@@ -25,6 +27,7 @@ const AboutForm = () => {
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    setFormError(null);
     e.preventDefault()
 
     const updateBody = {
@@ -45,6 +48,7 @@ const AboutForm = () => {
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
+        'jwt': authToken
       },
       body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
@@ -60,7 +64,8 @@ const AboutForm = () => {
         return res.json()
       })
       .then(data => {
-        data.errors && setFormError(data.message);
+        console.log(data)
+        // data && setFormError(data.message);
       })
       .catch((error) => {
         console.error('Error:', error);

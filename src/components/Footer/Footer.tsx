@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../context/authContext';
+import { deleteCookie } from '../../services/cookieService';
 
 /**
  * Renders Footer
@@ -9,7 +10,17 @@ const Footer: React.FC = (): JSX.Element => {
   const { authorized, setAuthorized, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
 
   const handleLoginLogout = (): void => {
-    !authorized ? setLoginFormVisible(!loginFormVisible) : setAuthorized(false)
+    if (!authorized) {
+      setLoginFormVisible(!loginFormVisible)
+    } else {
+      setAuthorized(false)
+      deleteCookie('jwt')
+      // setFeedback({
+      //   type: 'success',
+      //   title: 'Logged Out',
+      //   body: 'You have been logged out'
+      // })
+    }
   }
 
   return (

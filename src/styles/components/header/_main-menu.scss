@@ -25,6 +25,8 @@
     }
 
     .menu-link {
+      background: transparent;
+      border: none;
       color: $color-light;
       font-family: 'poppins', 'sans-serif';
       font-size: 1.8rem;
@@ -34,6 +36,7 @@
       text-transform: uppercase;
 
       &:hover {
+        cursor: pointer;
         border-bottom: $color-light 1px solid;
         color: darken($color-light, 30%) !important;
       }

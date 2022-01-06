@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
+import { setCookie } from '../../services/cookieService';
 
 const LoginForm: React.FC = (): JSX.Element => {
-  const { setAuthorized, setAuthToken, authToken, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
+  const { setAuthorized, setAuthToken, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
 
   // Input Values
   const [usernameInput, setUsernameInput] = useState<string>('');
@@ -33,8 +34,8 @@ const LoginForm: React.FC = (): JSX.Element => {
       })
       .then(data => {
         data.jwt && setAuthToken(data.jwt);
+        setCookie('jwt', data.jwt, 1);
         data.errors && setFormError(data.errors);
-        console.log(data.jwt)
       })
       .catch((error) => {
         console.error('Error:', error);
