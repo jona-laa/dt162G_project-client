@@ -53,6 +53,10 @@ interface AddItemButtonProps {
   color: 'black' | 'white';
 }
 
+interface LoadingProps {
+  text?: string;
+}
+
 /* 
   CONTEXT TYPES 
 */

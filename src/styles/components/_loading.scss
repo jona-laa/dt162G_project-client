@@ -1,8 +1,21 @@
+.loading-wrapper {
+  height: 100px;
+  width: 100px;
+  display: 'flex';
+  flex-direction: 'column';
+  justify-content: 'center';
+  align-items: 'center';
+
+  .loading-wrapper__loading-icon {
+    width: 30px;
+  }
+}
+
 .loader {
   margin: auto;
   border: 5px solid #f3f3f3;
   border-top: 5px solid #121212;
-  border-radius: 50%;
+  border-radius: 90%;
   width: 30px;
   height: 30px;
   animation: spin 1s linear infinite;

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import { setCookie } from '../../services/cookieService';
+import Loading from '../Loading/Loading';
 
 const LoginForm: React.FC = (): JSX.Element => {
   const { setAuthorized, setAuthToken, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
@@ -36,7 +37,7 @@ const LoginForm: React.FC = (): JSX.Element => {
       })
       .then(data => {
         data.jwt && setAuthToken(data.jwt);
-        setCookie('jwt', data.jwt, 1);
+        data.jwt && setCookie('jwt', data.jwt, 1);
         data.errors && setFormError(data.errors);
       })
       .catch((error) => {
@@ -85,10 +86,7 @@ const LoginForm: React.FC = (): JSX.Element => {
 
           {loading && (
             <div className='overlay'>
-              <div className='login-form__loader-wrapper'>
-                <div className="loader"></div>
-                <p style={{ color: 'white' }}>Logging In...</p>
-              </div>
+              <Loading text={'Logging In...'} />
             </div>
           )}
 

@@ -3,6 +3,8 @@ import { AuthContext } from '../../../context/authContext'
 import { ContentContext } from '../../../context/contentContext'
 import AddItemButton from '../../AddItemButton/AddItemButton'
 import EditItemControls from '../../EditItemControls/EditItemControls'
+import loader from '../../../assets/images/loader.gif'
+import Loading from '../../Loading/Loading'
 
 /**
  * Renders Work section
@@ -21,7 +23,7 @@ const Work: React.FC = (): JSX.Element => {
       .then(res => res.json())
       .then(data => componentMounted && setWork(data))
       .catch(error => console.log(`Error: ${error} fetching Work data in component Work.tsx`))
-      .finally(() => componentMounted && setLoading(false))
+    // .finally(() => componentMounted && setLoading(false))
 
     return () => {
       componentMounted = false;
@@ -34,7 +36,7 @@ const Work: React.FC = (): JSX.Element => {
       <h3 className="centered-heading">Work</h3>
       <div className="row trio work">
         {loading ? (
-          <div className="loader"></div>
+          <Loading />
         ) : (
           work.map(job => (
             <div key={job._id} className="resume-item">
