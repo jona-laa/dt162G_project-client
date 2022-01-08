@@ -32,6 +32,7 @@ const EditItemControls = ({ item, itemType, color }: EditItemControlsProps): JSX
             onClick={() => {
               setUpdateItemType(itemType)
               setUpdateItem(item)
+              setEditControlsVisible(!editControlsVisible)
             }}
           >
             <i className="fas fa-pen fa-1x"></i>
