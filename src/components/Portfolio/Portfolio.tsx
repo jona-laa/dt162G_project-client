@@ -5,6 +5,7 @@ import AddItemButton from '../AddItemButton/AddItemButton'
 import EditItemControls from '../EditItemControls/EditItemControls'
 
 import flipside from '../../assets/images/Flipside.jpg'
+import Loading from '../Loading/Loading'
 
 /**
  * Renders Portfolio section
@@ -43,7 +44,7 @@ const Portfolio: React.FC = (): JSX.Element => {
 
       <div className="row trio portfolio-container">
         {loading ? (
-          <div className="loader"></div>
+          <Loading text={'Loading...'} textColor={'white'} />
         ) : (
           projects.map(project => (
             <div

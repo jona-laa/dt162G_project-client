@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../context/authContext';
 import { deleteCookie } from '../../services/cookieService';
+import { FeedbackContext } from '../../context/feedbackContext';
+
 
 /**
  * Renders Footer
@@ -8,6 +10,7 @@ import { deleteCookie } from '../../services/cookieService';
  */
 const Footer: React.FC = (): JSX.Element => {
   const { authorized, setAuthorized, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
+  const { setFeedback } = useContext(FeedbackContext);
 
   const handleLoginLogout = (): void => {
     if (!authorized) {
@@ -15,11 +18,12 @@ const Footer: React.FC = (): JSX.Element => {
     } else {
       setAuthorized(false)
       deleteCookie('jwt')
-      // setFeedback({
-      //   type: 'success',
-      //   title: 'Logged Out',
-      //   body: 'You have been logged out'
-      // })
+      setTimeout(() => {
+        setFeedback({
+          type: 'success',
+          message: 'You have been logged out'
+        })
+      }, 1000)
     }
   }
 

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 import { AuthContext } from '../../../context/authContext';
+import { FeedbackContext } from '../../../context/feedbackContext';
 
 const WorkForm = () => {
   // App State - Context
@@ -14,6 +15,7 @@ const WorkForm = () => {
     setWork
   } = useContext(ContentContext);
   const { authToken } = useContext(AuthContext);
+  const { setFeedback } = useContext(FeedbackContext);
   // Component State - Input Values
   const [companyInput, setCompanyInput] = useState<string>('');
   const [titleInput, setTitleInput] = useState<string>('');
@@ -77,11 +79,10 @@ const WorkForm = () => {
       .then(data => {
         if (!updateItemType && !data.error) {
           setWork([...work, data])
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'New about item created!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'New work item created!'
+          })
         }
         else if (updateItemType && !data.error) {
           const workCopy = [...work];
@@ -93,11 +94,10 @@ const WorkForm = () => {
           itemToUpdate.descr = data.descr;
 
           setWork(workCopy)
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'Item Updated!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'Work item updated!'
+          })
         }
         else {
           setFormError(data.error);
@@ -105,11 +105,10 @@ const WorkForm = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
-        // setFeedback({
-        //   type: 'error',
-        //   title: 'Oops...',
-        //   body: 'Something went wrong. Try again.'
-        // })
+        setFeedback({
+          type: 'error',
+          message: 'Something went wrong. Try again.'
+        })
       });
   }
 

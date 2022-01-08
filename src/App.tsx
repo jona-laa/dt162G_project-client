@@ -10,24 +10,29 @@ import Contact from './components/Contact/Contact';
 import { AuthProvider } from './context/authContext';
 import LoginForm from './components/LoginForm/LoginForm';
 import { ContentProvider } from './context/contentContext';
+import { FeedbackProvider } from './context/feedbackContext';
 import ContentForm from './components/ContentForm/ContentForm';
+import FeedbackMessage from './components/FeedbackMessage/FeedbackMessage';
 
 const App: React.FC = (): JSX.Element => {
   return (
     <AuthProvider>
-      <ContentProvider>
-        <Header />
-        <main>
-          <About />
-          <Skills />
-          <Resume />
-          <Portfolio />
-          <Contact />
-          <ContentForm />
-        </main>
-        <LoginForm />
-        <Footer />
-      </ContentProvider>
+      <FeedbackProvider>
+        <ContentProvider>
+          <Header />
+          <main>
+            <About />
+            <Skills />
+            <Resume />
+            <Portfolio />
+            <Contact />
+            <ContentForm />
+            <FeedbackMessage />
+          </main>
+          <LoginForm />
+          <Footer />
+        </ContentProvider>
+      </FeedbackProvider>
     </AuthProvider>
   );
 }

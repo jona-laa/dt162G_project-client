@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/authContext'
 import { ContentContext } from '../../context/contentContext'
 import AddItemButton from '../AddItemButton/AddItemButton'
 import EditItemControls from '../EditItemControls/EditItemControls'
+import Loading from '../Loading/Loading'
 
 /**
  * Renders About section
@@ -42,7 +43,7 @@ const About: React.FC = (): JSX.Element => {
       <div className="about-container">
 
         {loading ? (
-          <div className="loader"></div>
+          <Loading text={'Loading...'} textColor={'black'} />
         ) : (
           about.map(about => (
             <div className="about-item" key={about._id}>

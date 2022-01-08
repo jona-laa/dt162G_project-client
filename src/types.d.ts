@@ -55,6 +55,7 @@ interface AddItemButtonProps {
 
 interface LoadingProps {
   text?: string;
+  textColor?: 'white' | 'black';
 }
 
 /* 
@@ -88,6 +89,16 @@ interface ContentContextType {
   setStudies: React.Dispatch<React.SetStateAction<Array<Course>>>;
   projects: Array<Project>;
   setProjects: React.Dispatch<React.SetStateAction<Array<Project>>>;
+}
+
+interface FeedbackContextType {
+  feedback: Feedback;
+  setFeedback: React.Dispatch<React.SetStateAction<Feedback>>;
+}
+
+interface Feedback {
+  type: 'success' | 'error';
+  message: string;
 }
 
 interface InputSetState {

@@ -9,7 +9,10 @@ const fetchDelete = (endpoint: string, itemId: string, authToken: string) => {
       },
       body: JSON.stringify({ "_id": itemId }),
     })
-      .then(res => res.json())
+      .then(res => {
+        res.status === 200 && window.location.reload();
+        return res.json()
+      })
       .then(data => {
         console.log('Success:', data);
       })

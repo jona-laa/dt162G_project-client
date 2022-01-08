@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
+import { FeedbackContext } from '../../context/feedbackContext';
 import { setCookie } from '../../services/cookieService';
 import Loading from '../Loading/Loading';
 
 const LoginForm: React.FC = (): JSX.Element => {
   const { setAuthorized, setAuthToken, loginFormVisible, setLoginFormVisible } = useContext(AuthContext);
+  const { setFeedback } = useContext(FeedbackContext);
 
   // Input Values
   const [usernameInput, setUsernameInput] = useState<string>('');
@@ -32,6 +34,10 @@ const LoginForm: React.FC = (): JSX.Element => {
         if (res.status === 200) {
           setAuthorized(true);
           setLoginFormVisible(!loginFormVisible)
+          setFeedback({
+            type: 'success',
+            message: 'Logged in. Welcome back!'
+          })
         }
         return res.json()
       })
@@ -42,11 +48,10 @@ const LoginForm: React.FC = (): JSX.Element => {
       })
       .catch((error) => {
         console.error('Error:', error);
-        // setFeedback({
-        //   type: 'error',
-        //   title: 'Oops...',
-        //   body: 'Something went wrong. Try again.'
-        // })
+        setFeedback({
+          type: 'error',
+          message: 'Something went wrong. Try again.'
+        })
       })
       .finally(() => setLoading(false));
   }

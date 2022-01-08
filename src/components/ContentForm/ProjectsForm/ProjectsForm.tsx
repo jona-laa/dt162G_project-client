@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ContentContext } from '../../../context/contentContext';
 import { AuthContext } from '../../../context/authContext';
+import { FeedbackContext } from '../../../context/feedbackContext';
 
 const ProjectsForm = () => {
   // App State - Context
@@ -14,6 +15,7 @@ const ProjectsForm = () => {
     setProjects
   } = useContext(ContentContext);
   const { authToken } = useContext(AuthContext);
+  const { setFeedback } = useContext(FeedbackContext);
   // Component State - Input Values
   const [titleInput, setTitleInput] = useState<string>('');
   const [projectUrlInput, setProjectUrlInput] = useState<string>('');
@@ -73,11 +75,10 @@ const ProjectsForm = () => {
       .then(data => {
         if (!updateItemType && !data.error) {
           setProjects([...projects, data])
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'New about item created!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'New projects item created!'
+          })
         }
         else if (updateItemType && !data.error) {
           const projectsCopy = [...projects];
@@ -88,11 +89,10 @@ const ProjectsForm = () => {
           itemToUpdate.img_src = data.img_src;
 
           setProjects(projectsCopy)
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'Item Updated!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'Projects item updated!'
+          })
         }
         else {
           setFormError(data.error);
@@ -100,6 +100,10 @@ const ProjectsForm = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
+        setFeedback({
+          type: 'error',
+          message: 'Something went wrong. Try again.'
+        })
       });
   }
 

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../../context/authContext';
 import { ContentContext } from '../../../context/contentContext';
+import { FeedbackContext } from '../../../context/feedbackContext';
 
 const AboutForm = () => {
   // App State - Context
@@ -14,6 +15,7 @@ const AboutForm = () => {
     setAbout
   } = useContext(ContentContext);
   const { authToken } = useContext(AuthContext);
+  const { setFeedback } = useContext(FeedbackContext);
   // Component State - Input Values
   const [headingInput, setHeadingInput] = useState<string>('');
   const [bioInput, setBioInput] = useState<string>('');
@@ -70,11 +72,10 @@ const AboutForm = () => {
       .then(data => {
         if (!updateItemType && !data.error) {
           setAbout([...about, data])
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'New about item created!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'New about item created!'
+          })
         }
         else if (updateItemType && !data.error) {
           const aboutCopy = [...about];
@@ -83,11 +84,10 @@ const AboutForm = () => {
           itemToUpdate.heading = data.heading;
           itemToUpdate.img_src = data.img_src;
           setAbout(aboutCopy)
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'Item Updated!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'About item updated!'
+          })
         }
         else {
           setFormError(data.error);
@@ -95,11 +95,10 @@ const AboutForm = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
-        // setFeedback({
-        //   type: 'error',
-        //   title: 'Oops...',
-        //   body: 'Something went wrong. Try again.'
-        // })
+        setFeedback({
+          type: 'error',
+          message: 'Something went wrong. Try again.'
+        })
       });
   }
 

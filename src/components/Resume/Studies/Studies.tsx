@@ -3,6 +3,7 @@ import { AuthContext } from '../../../context/authContext'
 import { ContentContext } from '../../../context/contentContext'
 import AddItemButton from '../../AddItemButton/AddItemButton'
 import EditItemControls from '../../EditItemControls/EditItemControls'
+import Loading from '../../Loading/Loading'
 
 /**
  * Renders Studies section
@@ -34,7 +35,7 @@ const Studies: React.FC = (): JSX.Element => {
       <h3 className="centered-heading">Studies</h3>
       <div className="row trio studies">
         {loading ? (
-          <div className="loader"></div>
+          <Loading text={'Loading...'} textColor={'black'} />
         ) : (
           studies.map(course => (
             <div key={course._id} className="resume-item">

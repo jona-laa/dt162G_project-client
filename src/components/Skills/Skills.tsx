@@ -4,6 +4,7 @@ import AddItemButton from '../AddItemButton/AddItemButton'
 import { AuthContext } from '../../context/authContext'
 import { ContentContext } from '../../context/contentContext'
 import EditItemControls from '../EditItemControls/EditItemControls'
+import Loading from '../Loading/Loading'
 
 /**
  * Renders Skills section
@@ -46,7 +47,7 @@ const Skills: React.FC = (): JSX.Element => {
             <div className="skills-container">
               {/* Skills will render here */}
               {loading ? (
-                <div className="loader"></div>
+                <Loading text={'Loading...'} textColor={'white'} />
               ) : (
                 skills.map(skill => (
                   <div

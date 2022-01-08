@@ -1,12 +1,17 @@
 import React from 'react'
 // import loader from '../../assets/images/loading.gif'
 
-const Loading = ({ text }: LoadingProps) => {
+/**
+ * 
+ * @param text        Text underneath spinner
+ * @param textColor   You guessed it... Text color!
+ * @example           <Loading text={'Loading...'} textColor={'black'}>
+ */
+const Loading = ({ text, textColor }: LoadingProps) => {
   return (
     <div className='loading-wrapper'>
       <div className="loader"></div>
-      {/* <img className='loading-wrapper__loading-icon' src={loader} alt="" /> */}
-      {text && <p style={{ color: 'white' }}>{text}</p>}
+      {text && <p style={{ color: textColor ? textColor : 'white', textAlign: 'center' }}>{text}</p>}
     </div>
   )
 }

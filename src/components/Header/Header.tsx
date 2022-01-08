@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext } from 'react'
 import { AuthContext } from '../../context/authContext';
+import { FeedbackContext } from '../../context/feedbackContext';
 import { deleteCookie } from '../../services/cookieService';
 import { elementDisplay, elementToggle, alterBgColor } from '../../Utils/utils';
 
@@ -16,7 +17,7 @@ const Header = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
   const [currentScrollPos, setCurrentScrollPos] = useState(null);
   const { authorized, setAuthorized } = useContext(AuthContext)
-
+  const { setFeedback } = useContext(FeedbackContext);
 
   // TOGGLE MENU
   const toggleMenu = () => {
@@ -85,11 +86,12 @@ const Header = () => {
   const handleLogout = () => {
     setAuthorized(false)
     deleteCookie('jwt')
-    // setFeedback({
-    //   type: 'success',
-    //   title: 'Logged Out',
-    //   body: 'You have been logged out'
-    // })
+    setTimeout(() => {
+      setFeedback({
+        type: 'success',
+        message: 'You have been logged out'
+      })
+    }, 1000)
   }
 
   return (

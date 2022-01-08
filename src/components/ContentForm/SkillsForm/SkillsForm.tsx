@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../../context/authContext';
 import { ContentContext } from '../../../context/contentContext';
+import { FeedbackContext } from '../../../context/feedbackContext';
 
 const SkillsForm = () => {
   // App State - Context
@@ -14,6 +15,7 @@ const SkillsForm = () => {
     setSkills
   } = useContext(ContentContext);
   const { authToken } = useContext(AuthContext);
+  const { setFeedback } = useContext(FeedbackContext);
   // Component State - Input Values
   const [nameInput, setNameInput] = useState<string>('');
   const [iconInput, setIconInput] = useState<string>('');
@@ -68,11 +70,10 @@ const SkillsForm = () => {
         console.log(data)
         if (!updateItemType && !data.error) {
           setSkills([...skills, data])
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'New about item created!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'New skills item created!'
+          })
         }
         else if (updateItemType && !data.error) {
           const skillsCopy = [...skills];
@@ -80,11 +81,10 @@ const SkillsForm = () => {
           itemToUpdate.name = data.name;
           itemToUpdate.icon = data.icon;
           setSkills(skillsCopy)
-          // setFeedback({
-          //   type: 'success',
-          //   title: 'Success!',
-          //   body: 'Item Updated!'
-          // })
+          setFeedback({
+            type: 'success',
+            message: 'Skills item updated!'
+          })
         }
         else {
           setFormError(data.error);
@@ -92,11 +92,10 @@ const SkillsForm = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
-        // setFeedback({
-        //   type: 'error',
-        //   title: 'Oops...',
-        //   body: 'Something went wrong. Try again.'
-        // })
+        setFeedback({
+          type: 'error',
+          message: 'Something went wrong. Try again.'
+        })
       });
   }
 

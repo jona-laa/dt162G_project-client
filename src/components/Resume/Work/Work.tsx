@@ -23,7 +23,7 @@ const Work: React.FC = (): JSX.Element => {
       .then(res => res.json())
       .then(data => componentMounted && setWork(data))
       .catch(error => console.log(`Error: ${error} fetching Work data in component Work.tsx`))
-    // .finally(() => componentMounted && setLoading(false))
+      .finally(() => componentMounted && setLoading(false))
 
     return () => {
       componentMounted = false;
@@ -36,7 +36,7 @@ const Work: React.FC = (): JSX.Element => {
       <h3 className="centered-heading">Work</h3>
       <div className="row trio work">
         {loading ? (
-          <Loading />
+          <Loading text={'Loading...'} textColor={'black'} />
         ) : (
           work.map(job => (
             <div key={job._id} className="resume-item">
