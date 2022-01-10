@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/authContext'
 import { ContentContext } from '../../context/contentContext'
 import EditItemControls from '../EditItemControls/EditItemControls'
 import Loading from '../Loading/Loading'
+import { API_URL } from '../../constants'
 
 /**
  * Renders Skills section
@@ -19,7 +20,7 @@ const Skills: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/api/content/skills')
+    fetch(`${API_URL}/api/content/skills`)
       .then(res => res.json())
       .then(data => componentMounted && setSkills(data))
       .catch(error => console.log(`Error: ${error} fetching Skills data in component Skills.tsx`))

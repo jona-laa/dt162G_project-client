@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { API_URL } from '../../../constants';
 import { AuthContext } from '../../../context/authContext';
 import { ContentContext } from '../../../context/contentContext';
 import { FeedbackContext } from '../../../context/feedbackContext';
@@ -51,7 +52,7 @@ const SkillsForm = () => {
       icon: iconInput,
     }
 
-    fetch(`http://localhost:4000/api/content/skills`, {
+    fetch(`${API_URL}/api/content/skills`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {

@@ -5,6 +5,7 @@ import AddItemButton from '../../AddItemButton/AddItemButton'
 import EditItemControls from '../../EditItemControls/EditItemControls'
 import loader from '../../../assets/images/loader.gif'
 import Loading from '../../Loading/Loading'
+import { API_URL } from '../../../constants'
 
 /**
  * Renders Work section
@@ -19,7 +20,7 @@ const Work: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/api/content/work')
+    fetch(`${API_URL}/api/content/work`)
       .then(res => res.json())
       .then(data => componentMounted && setWork(data))
       .catch(error => console.log(`Error: ${error} fetching Work data in component Work.tsx`))

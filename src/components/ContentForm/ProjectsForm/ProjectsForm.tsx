@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ContentContext } from '../../../context/contentContext';
 import { AuthContext } from '../../../context/authContext';
 import { FeedbackContext } from '../../../context/feedbackContext';
+import axios from 'axios';
+import { API_URL } from '../../../constants';
 
 const ProjectsForm = () => {
   // App State - Context
@@ -19,7 +21,9 @@ const ProjectsForm = () => {
   // Component State - Input Values
   const [titleInput, setTitleInput] = useState<string>('');
   const [projectUrlInput, setProjectUrlInput] = useState<string>('');
-  const [imageInput, setImageInput] = useState<string>('');
+  const [imageNameInput, setImageNameInput] = useState<string>('');
+  const [imageFile, setImageFile] = useState<string>('');
+  const [uploadedImage, setUploadedImage] = useState({})
   const [descriptionInput, setDescriptionInput] = useState<string>('');
   // Form error feedback
   const [formError, setFormError] = useState<string | null>(null);
@@ -30,7 +34,7 @@ const ProjectsForm = () => {
     if (updateItemType) {
       componentMounted && setTitleInput(updateItem.title);
       componentMounted && setProjectUrlInput(updateItem.prj_url);
-      componentMounted && setImageInput(updateItem.img_src);
+      componentMounted && setImageNameInput(updateItem.img_src);
       componentMounted && setDescriptionInput(updateItem.descr);
     }
 
@@ -39,25 +43,56 @@ const ProjectsForm = () => {
     }
   }, [])
 
+
+  const submitFiles = async () => {
+    const formData = new FormData();
+    formData.append('file', imageFile)
+
+    try {
+      const res = await axios.post(`${API_URL}/api/content/uploads`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'jwt': authToken
+        }
+      })
+
+      const { fileName, filePath } = res.data;
+      setUploadedImage({ fileName, filePath })
+    } catch (error) {
+      if (error.response.status === 500) {
+        console.log('There was an internal server error')
+      } else {
+        console.log(error.response.data.message)
+      }
+    }
+  }
+
+  const onFileInputChange = (e) => {
+    setImageFile(e?.target?.files[0]);
+    setImageNameInput(e?.target?.files[0]?.name);
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    submitFiles();
 
     const updateBody = {
       _id: updateItem?._id,
       title: titleInput,
       prj_url: projectUrlInput,
-      img_src: imageInput,
+      img_src: imageNameInput,
       descr: descriptionInput,
     }
 
     const postBody = {
       title: titleInput,
       prj_url: projectUrlInput,
-      img_src: imageInput,
+      img_src: imageNameInput,
       descr: descriptionInput,
     }
 
-    fetch(`http://localhost:4000/api/content/projects`, {
+    fetch(`${API_URL}/api/content/projects`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {
@@ -66,15 +101,11 @@ const ProjectsForm = () => {
       },
       body: JSON.stringify(updateItemType ? updateBody : postBody),
     })
-      .then(res => {
-        if (res.status === 200) {
-          handleClose();
-        }
-        return res.json()
-      })
+      .then(res => res.json())
       .then(data => {
         if (!updateItemType && !data.error) {
           setProjects([...projects, data])
+          handleClose();
           setFeedback({
             type: 'success',
             message: 'New projects item created!'
@@ -89,6 +120,7 @@ const ProjectsForm = () => {
           itemToUpdate.img_src = data.img_src;
 
           setProjects(projectsCopy)
+          handleClose();
           setFeedback({
             type: 'success',
             message: 'Projects item updated!'
@@ -150,16 +182,14 @@ const ProjectsForm = () => {
             />
             <br />
 
-            <label htmlFor="image" className="content-form__label">Image</label>
+            <label htmlFor="image-file" className="content-form__label">Image</label>
             <br />
             <input
-              type="text"
-              id="image-input"
-              name="image"
-              autoComplete="true"
+              type="file"
+              id="image-file-input"
+              name="image-file"
               className="content-form__input"
-              value={imageInput}
-              onChange={(e) => setImageInput(e.target.value)}
+              onChange={(e) => onFileInputChange(e)}
             />
             <br />
 

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { ContentContext } from '../../../context/contentContext';
 import { AuthContext } from '../../../context/authContext';
 import { FeedbackContext } from '../../../context/feedbackContext';
+import { API_URL } from '../../../constants';
 
 const WorkForm = () => {
   // App State - Context
@@ -61,7 +62,7 @@ const WorkForm = () => {
       descr: descriptionInput,
     }
 
-    fetch(`http://localhost:4000/api/content/work`, {
+    fetch(`${API_URL}/api/content/work`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {

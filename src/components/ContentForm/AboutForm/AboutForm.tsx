@@ -1,7 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { AuthContext } from '../../../context/authContext';
 import { ContentContext } from '../../../context/contentContext';
 import { FeedbackContext } from '../../../context/feedbackContext';
+import axios from 'axios';
+import { API_URL } from '../../../constants';
 
 const AboutForm = () => {
   // App State - Context
@@ -19,7 +21,9 @@ const AboutForm = () => {
   // Component State - Input Values
   const [headingInput, setHeadingInput] = useState<string>('');
   const [bioInput, setBioInput] = useState<string>('');
-  const [imageInput, setImageInput] = useState<string>('');
+  const [imageNameInput, setImageNameInput] = useState<string>('');
+  const [imageFile, setImageFile] = useState<string>('');
+  const [uploadedImage, setUploadedImage] = useState({})
   // Component State - Form error feedback
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -29,7 +33,7 @@ const AboutForm = () => {
     if (updateItemType) {
       componentMounted && setHeadingInput(updateItem.heading);
       componentMounted && setBioInput(updateItem.bio);
-      componentMounted && setImageInput(updateItem.img_src);
+      componentMounted && setImageNameInput(updateItem.img_src);
     }
 
     return () => {
@@ -37,24 +41,55 @@ const AboutForm = () => {
     }
   }, [])
 
+  const submitFiles = async () => {
+    const formData = new FormData();
+    formData.append('file', imageFile)
+
+    try {
+      const res = await axios.post(`${API_URL}/api/content/uploads`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'jwt': authToken
+        }
+      })
+
+      const { fileName, filePath } = res.data;
+      setUploadedImage({ fileName, filePath })
+    } catch (error) {
+      if (error.response.status === 500) {
+        setFeedback({
+          type: 'error',
+          message: 'There was a problem uploading the image.'
+        })
+      } else {
+        setFeedback({
+          type: 'error',
+          message: error.response.data.message
+        })
+      }
+    }
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setFormError(null);
     e.preventDefault()
+
+    submitFiles();
 
     const updateBody = {
       _id: updateItem?._id,
       heading: headingInput,
       bio: bioInput,
-      img_src: imageInput,
+      img_src: imageNameInput,
     }
 
     const postBody = {
       heading: headingInput,
       bio: bioInput,
-      img_src: imageInput,
+      img_src: imageNameInput,
     }
 
-    fetch(`http://localhost:4000/api/content/about`, {
+    fetch(`${API_URL}/api/content/about`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {
@@ -107,6 +142,11 @@ const AboutForm = () => {
     setUpdateItemType(null);
   }
 
+  const onFileInputChange = (e) => {
+    setImageFile(e?.target?.files[0]);
+    setImageNameInput(e?.target?.files[0]?.name);
+  }
+
   return (
     <div className="overlay">
       <div className="content-form-container">
@@ -144,15 +184,14 @@ const AboutForm = () => {
             </textarea>
             <br />
 
-            <label htmlFor="image" className="content-form__label">Image</label>
+            <label htmlFor="image-file" className="content-form__label">Image</label>
             <br />
             <input
-              type="text"
-              id="image-input"
-              name="image"
+              type="file"
+              id="image-file-input"
+              name="image-file"
               className="content-form__input"
-              value={imageInput}
-              onChange={(e) => setImageInput(e.target.value)}
+              onChange={(e) => onFileInputChange(e)}
             />
             <br />
 

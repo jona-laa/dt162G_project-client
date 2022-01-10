@@ -6,6 +6,7 @@ import EditItemControls from '../EditItemControls/EditItemControls'
 
 import flipside from '../../assets/images/Flipside.jpg'
 import Loading from '../Loading/Loading'
+import { API_URL } from '../../constants'
 
 /**
  * Renders Portfolio section
@@ -20,7 +21,7 @@ const Portfolio: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/api/content/projects')
+    fetch(`${API_URL}/api/content/projects`)
       .then(res => res.json())
       .then(data => componentMounted && setProjects(data))
       .catch(error => console.log(`Error: ${error} fetching Work data in component Work.tsx`))
@@ -51,7 +52,7 @@ const Portfolio: React.FC = (): JSX.Element => {
               key={project._id}
               className="portfolio-item"
               style={{
-                background: `url(${flipside}) no-repeat center center/cover`,
+                background: `url('${API_URL}/api/content/images/${project.img_src}') no-repeat center center/cover`,
               }}
             >
               {/* EDIT CONTROLS IF LOGGED IN */}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react'
-import me from '../../assets/images/me.jpg'
 import { AuthContext } from '../../context/authContext'
 import { ContentContext } from '../../context/contentContext'
 import AddItemButton from '../AddItemButton/AddItemButton'
 import EditItemControls from '../EditItemControls/EditItemControls'
 import Loading from '../Loading/Loading'
+import { API_URL } from '../../constants'
 
 /**
  * Renders About section
@@ -19,7 +19,7 @@ const About: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/api/content/about')
+    fetch(`${API_URL}/api/content/about`)
       .then(res => res.json())
       .then(data => componentMounted && setAbout(data))
       .catch(error => console.log(`Error: ${error} fetching About data in component About.tsx`))
@@ -55,7 +55,7 @@ const About: React.FC = (): JSX.Element => {
               <div className="avatar-container">
                 <div className="avatar"
                   style={{
-                    background: `url(${me}) no-repeat center center/cover`,
+                    background: `url('${API_URL}/api/content/images/${about.img_src}') no-repeat center center/cover`,
                     backgroundPosition: "center"
                   }}
                 ></div>

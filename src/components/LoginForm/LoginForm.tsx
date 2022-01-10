@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { API_URL } from '../../constants';
 import { AuthContext } from '../../context/authContext';
 import { FeedbackContext } from '../../context/feedbackContext';
 import { setCookie } from '../../services/cookieService';
@@ -19,7 +20,7 @@ const LoginForm: React.FC = (): JSX.Element => {
     e.preventDefault()
     setLoading(true);
 
-    fetch(`http://localhost:4000/api/auth/login`, {
+    fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       mode: 'cors',
       headers: {

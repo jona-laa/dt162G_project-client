@@ -1,6 +1,8 @@
+import { API_URL } from '../constants';
+
 const fetchDelete = (endpoint: string, itemId: string, authToken: string) => {
   window.confirm('Sure you want to delete this?') &&
-    fetch(`http://localhost:4000/api/content/${endpoint}`, {
+    fetch(`${API_URL}/api/content/${endpoint}`, {
       method: 'DELETE', // or 'PUT'
       mode: 'cors',
       headers: {

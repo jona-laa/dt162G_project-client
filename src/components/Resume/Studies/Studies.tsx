@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
+import { API_URL } from '../../../constants'
 import { AuthContext } from '../../../context/authContext'
 import { ContentContext } from '../../../context/contentContext'
 import AddItemButton from '../../AddItemButton/AddItemButton'
@@ -18,7 +19,7 @@ const Studies: React.FC = (): JSX.Element => {
   useEffect(() => {
     let componentMounted: boolean = true;
 
-    fetch('http://localhost:4000/api/content/studies')
+    fetch(`${API_URL}/api/content/studies`)
       .then(res => res.json())
       .then(data => componentMounted && setStudies(data))
       .catch(error => console.log(`Error: ${error} fetching Work data in component Work.tsx`))

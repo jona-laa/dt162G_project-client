@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ContentContext } from '../../../context/contentContext';
 import { AuthContext } from '../../../context/authContext';
 import { FeedbackContext } from '../../../context/feedbackContext';
+import { API_URL } from '../../../constants';
 
 const StudiesForm = () => {
   // App State - Context
@@ -61,7 +62,7 @@ const StudiesForm = () => {
       descr: descriptionInput,
     }
 
-    fetch(`http://localhost:4000/api/content/studies`, {
+    fetch(`${API_URL}/api/content/studies`, {
       method: updateItemType ? 'PUT' : 'POST',
       mode: 'cors',
       headers: {
