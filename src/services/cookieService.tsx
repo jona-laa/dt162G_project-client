@@ -1,3 +1,9 @@
+/**
+ * Set cookie 
+ * @param   name    Cookie name 
+ * @param   value   Cookie value
+ * @param   days    Cookie expiration time
+ */
 export const setCookie = (name: string, value: string, days: number): void => {
   let expires = "";
   if (days) {
@@ -8,6 +14,11 @@ export const setCookie = (name: string, value: string, days: number): void => {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
+/**
+ * Get cookue by bane
+ * @param   name  Cookie name 
+ * @returns Cookie || Null
+ */
 export const getCookie = (name: string): string | null => {
   let nameEQ = name + "=";
   let ca = document.cookie.split(';');
@@ -19,6 +30,10 @@ export const getCookie = (name: string): string | null => {
   return null;
 }
 
+/**
+ * Deletes cookie by name
+ * @param   name  Cookie name 
+ */
 export const deleteCookie = (name: string): void => {
   document.cookie = name + '=; Max-Age=-99999999;';
 }

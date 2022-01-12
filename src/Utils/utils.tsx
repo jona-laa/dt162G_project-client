@@ -32,7 +32,7 @@ export const alterBgColor = (offset: number, col1: string, col2: string, ...elem
   * @param   {number}         fadeMs       Fade speed in milliseconds
   * @param   {Array<string>}  elements     Element ID/Class, e.g '.feedback'
 */
-export const toggleElement = (fadeMs, ...elements) => {
+export const toggleElement = (fadeMs: number, ...elements: Array<string>) => {
   elements.forEach(e => {
     $(`${e}`).toggle(fadeMs, function () {
     });
