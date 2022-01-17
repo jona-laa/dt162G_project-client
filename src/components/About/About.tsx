@@ -2,9 +2,9 @@ import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../context/authContext'
 import { ContentContext } from '../../context/contentContext'
 import AddItemButton from '../AddItemButton/AddItemButton'
-import EditItemControls from '../EditItemControls/EditItemControls'
 import Loading from '../Loading/Loading'
 import { API_URL } from '../../constants'
+import AboutItem from './AboutItem/AboutItem'
 
 /**
  * Renders About section
@@ -41,37 +41,14 @@ const About: React.FC = (): JSX.Element => {
       <div className="divider"></div>
 
       <div className="about-container">
-
         {loading ? (
           <Loading text={'Loading...'} textColor={'black'} />
         ) : (
           about.map(about => (
-            <div className="about-item" key={about._id}>
-              {/* EDIT CONTROLS IF LOGGED IN */}
-              {authorized &&
-                (<EditItemControls item={about} itemType={'about'} color={'black'} />)}
-
-              {/* AVATAR */}
-              <div className="avatar-container">
-                <div className="avatar"
-                  style={{
-                    background: `url('${API_URL}/api/content/images/${about.img_src}') no-repeat center center/cover`,
-                    backgroundPosition: "center"
-                  }}
-                ></div>
-              </div>
-
-              {/* ABOUT SECTION */}
-              <div>
-                <div>
-                  <h3>{about.heading}</h3>
-                  {about?.bio?.split('\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-                </div>
-              </div>
-            </div>))
+            <AboutItem about={about} />
+          ))
         )}
       </div>
-
     </section >
   )
 }
